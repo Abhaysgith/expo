@@ -1,0 +1,126 @@
+{
+  "version": "2024",
+  "disclaimer": "These are average figures based on existing franchise performance. Individual results may vary.",
+  "tiers": {
+    "tier1": {
+      "label": "Tier 1 City",
+      "cities": ["Mumbai", "Delhi", "Bangalore", "Hyderabad", "Chennai", "Pune", "Ahmedabad", "Kolkata"],
+      "investmentBreakdown": {
+        "franchiseFee": 500000,
+        "equipmentCost": 1200000,
+        "interiorSetup": 400000,
+        "workingCapital": 300000,
+        "miscellaneous": 100000,
+        "total": 2500000
+      },
+      "monthlyOperatingCost": {
+        "rent": 80000,
+        "utilities": 25000,
+        "staffSalaries": 60000,
+        "supplies": 20000,
+        "royalty": 45000,
+        "marketing": 15000,
+        "miscellaneous": 5000,
+        "total": 250000
+      },
+      "revenueMetrics": {
+        "avgOrderValue": 420,
+        "expectedMonthlyOrders": 3500,
+        "expectedMonthlyRevenue": 1470000,
+        "expectedMonthlyProfit": 1220000,
+        "profitMargin": 83,
+        "roiMonths": 20,
+        "yearOneProfit": 14640000,
+        "yearThreeProfit": 44000000
+      },
+      "services": {
+        "premiumWash": { "pricePerKg": 80, "avgOrderKg": 5 },
+        "dryCleaning": { "pricePerPiece": 150, "avgPieces": 4 },
+        "ironing": { "pricePerPiece": 12, "avgPieces": 20 },
+        "expressService": { "pricePerKg": 120, "avgOrderKg": 3 }
+      }
+    },
+    "tier2": {
+      "label": "Tier 2 City",
+      "cities": ["Jaipur", "Surat", "Lucknow", "Chandigarh", "Indore", "Nagpur", "Coimbatore", "Kochi", "Bhopal", "Vadodara"],
+      "investmentBreakdown": {
+        "franchiseFee": 350000,
+        "equipmentCost": 900000,
+        "interiorSetup": 280000,
+        "workingCapital": 200000,
+        "miscellaneous": 70000,
+        "total": 1800000
+      },
+      "monthlyOperatingCost": {
+        "rent": 45000,
+        "utilities": 18000,
+        "staffSalaries": 40000,
+        "supplies": 14000,
+        "royalty": 28000,
+        "marketing": 10000,
+        "miscellaneous": 5000,
+        "total": 160000
+      },
+      "revenueMetrics": {
+        "avgOrderValue": 350,
+        "expectedMonthlyOrders": 2000,
+        "expectedMonthlyRevenue": 700000,
+        "expectedMonthlyProfit": 540000,
+        "profitMargin": 77,
+        "roiMonths": 33,
+        "yearOneProfit": 6480000,
+        "yearThreeProfit": 19440000
+      },
+      "services": {
+        "premiumWash": { "pricePerKg": 65, "avgOrderKg": 5 },
+        "dryCleaning": { "pricePerPiece": 120, "avgPieces": 4 },
+        "ironing": { "pricePerPiece": 10, "avgPieces": 20 },
+        "expressService": { "pricePerKg": 95, "avgOrderKg": 3 }
+      }
+    },
+    "tier3": {
+      "label": "Tier 3 City",
+      "cities": ["Agra", "Varanasi", "Patna", "Jodhpur", "Mysuru", "Raipur", "Amritsar", "Bhubaneswar", "Guwahati"],
+      "investmentBreakdown": {
+        "franchiseFee": 250000,
+        "equipmentCost": 650000,
+        "interiorSetup": 200000,
+        "workingCapital": 150000,
+        "miscellaneous": 50000,
+        "total": 1300000
+      },
+      "monthlyOperatingCost": {
+        "rent": 25000,
+        "utilities": 12000,
+        "staffSalaries": 28000,
+        "supplies": 10000,
+        "royalty": 18000,
+        "marketing": 7000,
+        "miscellaneous": 5000,
+        "total": 105000
+      },
+      "revenueMetrics": {
+        "avgOrderValue": 280,
+        "expectedMonthlyOrders": 1000,
+        "expectedMonthlyRevenue": 280000,
+        "expectedMonthlyProfit": 175000,
+        "profitMargin": 63,
+        "roiMonths": 74,
+        "yearOneProfit": 2100000,
+        "yearThreeProfit": 6300000
+      },
+      "services": {
+        "premiumWash": { "pricePerKg": 50, "avgOrderKg": 5 },
+        "dryCleaning": { "pricePerPiece": 90, "avgPieces": 4 },
+        "ironing": { "pricePerPiece": 8, "avgPieces": 20 },
+        "expressService": { "pricePerKg": 75, "avgOrderKg": 3 }
+      }
+    }
+  },
+  "revenueChart": {
+    "labels": ["Month 1", "Month 3", "Month 6", "Month 12", "Month 18", "Month 24", "Month 36"],
+    "tier1Cumulative": [0, 3660000, 7320000, 17520000, 26280000, 35040000, 52560000],
+    "tier2Cumulative": [0, 1620000, 3240000, 7776000, 11664000, 15552000, 23328000],
+    "tier3Cumulative": [0, 525000, 1050000, 2520000, 3780000, 5040000, 7560000]
+  }
+}

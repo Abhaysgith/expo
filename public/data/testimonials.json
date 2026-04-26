@@ -1,0 +1,124 @@
+{
+  "testimonials": [
+    {
+      "id": 1,
+      "name": "Rajesh Mehta",
+      "location": "Mumbai, Maharashtra",
+      "businessAge": "5 years",
+      "monthlyRevenue": "₹19.2L",
+      "rating": 5,
+      "photo": "/icons/avatar-1.svg",
+      "quote": "I was skeptical about laundry franchises, but UClean changed everything. Within 8 months I broke even and now I'm running 2 outlets. The tech dashboard alone saves me 4 hours a week. Best investment of my life.",
+      "highlight": "Broke even in 8 months",
+      "tier": 1
+    },
+    {
+      "id": 2,
+      "name": "Priya Sharma",
+      "location": "South Delhi, Delhi",
+      "businessAge": "6 years",
+      "monthlyRevenue": "₹20.4L",
+      "rating": 5,
+      "photo": "/icons/avatar-2.svg",
+      "quote": "Coming from an IT background, I wanted data-driven business. UClean's real-time analytics is exactly that. I can see every order, every rupee, from my phone. My corporate clients keep coming back because we're 100% reliable.",
+      "highlight": "300+ corporate clients",
+      "tier": 1
+    },
+    {
+      "id": 3,
+      "name": "Anand Kumar",
+      "location": "Koramangala, Bangalore",
+      "businessAge": "4 years",
+      "monthlyRevenue": "₹17.8L",
+      "rating": 5,
+      "photo": "/icons/avatar-3.svg",
+      "quote": "The tech integration is what sold me. Bangalore is a tech city — customers expect apps and tracking. UClean's app keeps them loyal. I've maintained 4.7 rating with 4500 orders per month consistently.",
+      "highlight": "4.7 ⭐ with 4500+ orders/month",
+      "tier": 1
+    },
+    {
+      "id": 4,
+      "name": "Gurpreet Singh",
+      "location": "Sector 17, Chandigarh",
+      "businessAge": "2 years",
+      "monthlyRevenue": "₹6.5L",
+      "rating": 5,
+      "photo": "/icons/avatar-4.svg",
+      "quote": "As a Tier 2 city franchise, I was worried about market size. But UClean's research was spot on — Chandigarh's working professionals needed this badly. I have the highest rating in the network at 4.9 stars!",
+      "highlight": "Highest rated: 4.9 ⭐",
+      "tier": 2
+    },
+    {
+      "id": 5,
+      "name": "Kavitha Rajan",
+      "location": "Anna Nagar, Chennai",
+      "businessAge": "3 years",
+      "monthlyRevenue": "₹14.6L",
+      "rating": 5,
+      "photo": "/icons/avatar-5.svg",
+      "quote": "I'm a working mother and I wanted a business I could manage with family. UClean's management system is brilliant — I can run operations remotely. Training was comprehensive, support is 24/7. Couldn't ask for better.",
+      "highlight": "Managed remotely with family",
+      "tier": 1
+    },
+    {
+      "id": 6,
+      "name": "Hetal Patel",
+      "location": "Prahlad Nagar, Ahmedabad",
+      "businessAge": "3 years",
+      "monthlyRevenue": "₹12.4L",
+      "rating": 5,
+      "photo": "/icons/avatar-6.svg",
+      "quote": "The ROI has been phenomenal. I invested ₹28 lakhs and recovered it in 14 months. The eco-friendly positioning is a huge hit with young Ahmedabad customers. Growing 20% YoY without spending extra on marketing.",
+      "highlight": "ROI in 14 months, 20% YoY growth",
+      "tier": 1
+    },
+    {
+      "id": 7,
+      "name": "Mathew Thomas",
+      "location": "Kakkanad, Kochi",
+      "businessAge": "1.5 years",
+      "monthlyRevenue": "₹5.1L",
+      "rating": 4,
+      "photo": "/icons/avatar-7.svg",
+      "quote": "Kerala is a great market — people are educated and quality-conscious. UClean's brand reputation opened doors immediately. Even religious institutions and hospitals are my clients now. The journey has been incredibly smooth.",
+      "highlight": "Hospital & institution clients",
+      "tier": 2
+    },
+    {
+      "id": 8,
+      "name": "Sanjay Yadav",
+      "location": "Vijay Nagar, Indore",
+      "businessAge": "2 years",
+      "monthlyRevenue": "₹6.1L",
+      "rating": 5,
+      "photo": "/icons/avatar-8.svg",
+      "quote": "Indore is fastest growing city in MP and UClean caught this wave perfectly. I had zero business experience — just 10 years in a government job. The franchise model held my hand through everything. Now I'm my own boss.",
+      "highlight": "Zero experience to 6L/month revenue",
+      "tier": 2
+    },
+    {
+      "id": 9,
+      "name": "Vikram Joshi",
+      "location": "Hinjewadi, Pune",
+      "businessAge": "4 years",
+      "monthlyRevenue": "₹13.6L",
+      "rating": 5,
+      "photo": "/icons/avatar-9.svg",
+      "quote": "Serving IT park professionals in Hinjewadi is a goldmine. These folks are time-poor and quality-conscious. UClean's express service and app ordering is exactly what they need. I've expanded to 3 outlets in Pune now.",
+      "highlight": "Expanded to 3 Pune outlets",
+      "tier": 1
+    },
+    {
+      "id": 10,
+      "name": "Debjit Banerjee",
+      "location": "Salt Lake, Kolkata",
+      "businessAge": "3 years",
+      "monthlyRevenue": "₹11.9L",
+      "rating": 4,
+      "photo": "/icons/avatar-10.svg",
+      "quote": "I researched 12 franchise options before choosing UClean. The transparent business model, genuine support team, and realistic ROI projections — they delivered everything they promised. My accountant says I made the best business decision of my life.",
+      "highlight": "Best business decision — accountant verified",
+      "tier": 1
+    }
+  ]
+}
