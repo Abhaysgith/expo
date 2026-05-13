@@ -99,7 +99,7 @@ export default function RevenueChart({ locations }: { locations: FranchiseLocati
       </motion.div>
 
       {/* Summary row */}
-      <div className="grid grid-cols-3 gap-4 mt-5 pt-5 border-t border-slate-800/60">
+      <div className="grid grid-cols-2 sm:grid-cols-3 gap-4 mt-5 pt-5 border-t border-slate-800/60">
         {[
           { label: 'Peak Day', value: 'Saturday', sub: formatINR(peak) },
           { label: '7-Day Total', value: formatINR(total), sub: 'all locations' },

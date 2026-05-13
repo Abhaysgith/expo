@@ -54,7 +54,7 @@ const CARDS = (locations: FranchiseLocation[]) => {
       color: '#10B981',
       glow: 'rgba(16,185,129,0.35)',
       glowSoft: 'rgba(16,185,129,0.08)',
-      trend: '3 new Q2', sub: 'pan-India cities',
+      trend: '3 new Q2', sub: 'global cities',
     },
   ];
 };

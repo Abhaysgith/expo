@@ -11,7 +11,7 @@ const inter = Inter({
 
 export const metadata: Metadata = {
   title: 'UClean — Tech-First Laundry Franchise',
-  description: 'India\'s most advanced laundry franchise. Real-time analytics, zero software fees, proven ROI.',
+  description: 'World\'s most advanced laundry franchise. Real-time analytics, zero software fees, proven ROI.',
   manifest: '/manifest.json',
   appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'UClean' },
   icons: { icon: '/icons/icon-192.png', apple: '/icons/icon-192.png' },

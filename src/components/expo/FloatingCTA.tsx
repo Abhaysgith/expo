@@ -80,7 +80,7 @@ export default function FloatingCTA() {
               style={{ fontSize: '1.1rem', color: '#374151' }}>
               Be fully operational in{' '}
               <span className="font-bold text-green-700">30 days</span>.
-              Starts from ₹8L.
+              Starts from ₹22L.
             </p>
 
             {/* QR placeholder + CTA row */}

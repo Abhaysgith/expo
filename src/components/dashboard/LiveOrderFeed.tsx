@@ -135,7 +135,7 @@ export default function LiveOrderFeed({ allOrders }: { allOrders: LiveOrder[] })
           animate={{ x: ['100%', '-200%'] }}
           transition={{ duration: 28, repeat: Infinity, ease: 'linear' }}
         >
-          🔴 LIVE &nbsp;·&nbsp; Orders across 28 Indian cities &nbsp;·&nbsp; Premium Wash · Dry Clean · Express Wash &nbsp;·&nbsp; 50,000+ satisfied customers &nbsp;·&nbsp;
+          🔴 LIVE &nbsp;·&nbsp; Orders across global cities &nbsp;·&nbsp; Premium Wash · Dry Clean · Express Wash &nbsp;·&nbsp; 50,000+ satisfied customers &nbsp;·&nbsp;
         </motion.p>
       </div>
     </div>

@@ -58,7 +58,7 @@ export default function IndiaMap({ locations }: { locations: FranchiseLocation[]
       </div>
 
       {/* Map */}
-      <div className="map-container relative rounded-xl overflow-hidden" style={{ height: 380, background: 'rgba(15, 23, 42, 0.5)' }}>
+      <div className="map-container relative rounded-xl overflow-hidden h-[240px] sm:h-[380px]" style={{ background: 'rgba(15, 23, 42, 0.5)' }}>
         {/* Grid dots overlay */}
         <div className="absolute inset-0 grid-dots opacity-40 pointer-events-none" />
 

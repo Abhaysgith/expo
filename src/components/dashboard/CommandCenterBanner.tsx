@@ -101,9 +101,9 @@ export default function CommandCenterBanner({ locationCount, lastRefresh, isRefr
           </div>
 
           {/* Right: live KPI strip + refresh */}
-          <div className="flex items-center gap-3 flex-wrap">
+          <div className="flex flex-col sm:flex-row items-start sm:items-center gap-3 sm:gap-4 w-full md:w-auto">
             {/* Mini KPIs */}
-            <div className="flex items-center gap-1 divide-x divide-slate-700/60">
+            <div className="flex items-center gap-1 divide-x divide-slate-700/60 overflow-x-auto pb-1 sm:pb-0 scrollbar-hide">
               {[
                 { icon: Zap,      label: 'Orders/hr',  value: 847,  suffix: '', color: '#22C55E', decimals: 0 },
                 { icon: Activity, label: 'Uptime',      value: 99.9, suffix: '%', color: '#00FF88', decimals: 1 },
@@ -125,7 +125,7 @@ export default function CommandCenterBanner({ locationCount, lastRefresh, isRefr
             <button
               onClick={onRefresh}
               disabled={isRefreshing}
-              className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 disabled:opacity-40"
+              className="flex items-center gap-2 px-3 py-2 rounded-lg text-xs font-semibold transition-all duration-200 disabled:opacity-40 ml-auto sm:ml-0"
               style={{
                 background: 'rgba(6,182,212,0.06)',
                 border: '1px solid rgba(6,182,212,0.2)',

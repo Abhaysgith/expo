@@ -24,15 +24,15 @@ interface Country {
 // UClean operating countries with approximate marker coordinates
 const UCLEAN_COUNTRIES: Country[] = [
   { code:'IND', numericCode:'356', name:'India',      flag:'🇮🇳', stores:650, cities:150, lat:20.59,  lng:78.96,  status:'flagship',  launchYear:2016, color:'#22C55E' },
-  { code:'ARE', numericCode:'784', name:'UAE',        flag:'🇦🇪', stores:42,  cities:6,   lat:24.47,  lng:54.37,  status:'active',    launchYear:2020, color:'#818CF8' },
-  { code:'GHA', numericCode:'288', name:'Ghana',      flag:'🇬🇭', stores:18,  cities:4,   lat:7.95,   lng:-1.02,  status:'active',    launchYear:2021, color:'#10B981' },
-  { code:'BGD', numericCode:'050', name:'Bangladesh', flag:'🇧🇩', stores:24,  cities:5,   lat:23.69,  lng:90.36,  status:'active',    launchYear:2021, color:'#F59E0B' },
-  { code:'MNG', numericCode:'496', name:'Mongolia',   flag:'🇲🇳', stores:8,   cities:2,   lat:47.92,  lng:106.92, status:'active',    launchYear:2022, color:'#F472B6' },
-  { code:'SOM', numericCode:'706', name:'Somalia',    flag:'🇸🇴', stores:6,   cities:2,   lat:2.04,   lng:45.34,  status:'active',    launchYear:2022, color:'#34D399' },
-  { code:'MUS', numericCode:'480', name:'Mauritius',  flag:'🇲🇺', stores:12,  cities:3,   lat:-20.35, lng:57.55,  status:'active',    launchYear:2021, color:'#A78BFA' },
-  { code:'NPL', numericCode:'524', name:'Nepal',      flag:'🇳🇵', stores:20,  cities:5,   lat:28.39,  lng:84.12,  status:'active',    launchYear:2020, color:'#FB923C' },
-  { code:'LKA', numericCode:'144', name:'Sri Lanka',  flag:'🇱🇰', stores:14,  cities:4,   lat:7.87,   lng:80.77,  status:'active',    launchYear:2021, color:'#2DD4BF' },
-  { code:'KWT', numericCode:'414', name:'Kuwait',     flag:'🇰🇼', stores:6,   cities:2,   lat:29.37,  lng:47.98,  status:'expanding', launchYear:2023, color:'#FCD34D' },
+  { code:'MNG', numericCode:'496', name:'Mongolia',   flag:'🇲🇳', stores:12,  cities:3,   lat:47.92,  lng:106.92, status:'active',    launchYear:2022, color:'#F472B6' },
+  { code:'LKA', numericCode:'144', name:'Sri Lanka',  flag:'🇱🇰', stores:18,  cities:5,   lat:7.87,   lng:80.77,  status:'active',    launchYear:2021, color:'#2DD4BF' },
+  { code:'BGD', numericCode:'050', name:'Bangladesh', flag:'🇧🇩', stores:32,  cities:8,   lat:23.69,  lng:90.36,  status:'active',    launchYear:2021, color:'#F59E0B' },
+  { code:'GHA', numericCode:'288', name:'Ghana',      flag:'🇬🇭', stores:22,  cities:6,   lat:7.95,   lng:-1.02,  status:'active',    launchYear:2021, color:'#10B981' },
+  { code:'COD', numericCode:'180', name:'DR Congo',   flag:'🇨🇩', stores:8,   cities:2,   lat:-4.03,  lng:21.75,  status:'expanding', launchYear:2023, color:'#818CF8' },
+  { code:'NPL', numericCode:'524', name:'Nepal',      flag:'🇳🇵', stores:24,  cities:6,   lat:28.39,  lng:84.12,  status:'active',    launchYear:2020, color:'#FB923C' },
+  { code:'SOM', numericCode:'706', name:'Somalia',    flag:'🇸🇴', stores:10,  cities:3,   lat:2.04,   lng:45.34,  status:'active',    launchYear:2022, color:'#34D399' },
+  { code:'ARE', numericCode:'784', name:'UAE',        flag:'🇦🇪', stores:56,  cities:7,   lat:24.47,  lng:54.37,  status:'active',    launchYear:2020, color:'#10B981' },
+  { code:'MUS', numericCode:'480', name:'Mauritius',  flag:'🇲🇺', stores:15,  cities:4,   lat:-20.35, lng:57.55,  status:'active',    launchYear:2021, color:'#A78BFA' },
 ];
 
 // Map numeric code → color for Geography fill
@@ -99,11 +99,11 @@ export default function GlobalMap({ autoHighlight = true }: Props) {
       </div>
 
       {/* Map + Sidebar */}
-      <div className="flex-1 flex gap-4 min-h-0">
+      <div className="flex-1 flex flex-col lg:flex-row gap-4 min-h-0">
         {/* Map */}
         <div
           className="flex-1 relative rounded-xl overflow-hidden"
-          style={{ background: 'rgba(8,13,28,0.8)', border: '1px solid rgba(6,182,212,0.1)', minHeight: 280 }}
+          style={{ background: 'rgba(8,13,28,0.8)', border: '1px solid rgba(6,182,212,0.1)', minHeight: 200 }}
         >
           <div className="absolute inset-0 grid-dots opacity-30 pointer-events-none" />
 
@@ -194,7 +194,7 @@ export default function GlobalMap({ autoHighlight = true }: Props) {
         </div>
 
         {/* Country detail card */}
-        <div className="w-44 flex-shrink-0">
+        <div className="w-full lg:w-44 flex-shrink-0">
           <AnimatePresence mode="wait">
             {activeCountry && (
               <motion.div

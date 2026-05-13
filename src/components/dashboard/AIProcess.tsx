@@ -114,7 +114,7 @@ export default function AIProcess() {
       </div>
 
       {/* Steps row */}
-      <div className="flex items-center gap-2 mb-6">
+      <div className="flex items-center gap-1 sm:gap-2 mb-6 overflow-x-auto pb-2 scrollbar-hide">
         {STEPS.map((step, i) => {
           const isDone   = i < active;
           const isCurrent = i === active;
@@ -123,7 +123,7 @@ export default function AIProcess() {
               {/* Step node */}
               <div className="flex-shrink-0 relative">
                 <motion.div
-                  className="w-9 h-9 rounded-xl flex items-center justify-center relative z-10 cursor-pointer"
+                  className="w-8 h-8 sm:w-9 sm:h-9 rounded-lg sm:rounded-xl flex items-center justify-center relative z-10 cursor-pointer"
                   style={{
                     background: isCurrent
                       ? `rgba(${step.color === '#22C55E' ? '34,197,94' : step.color === '#818CF8' ? '129,140,248' : step.color === '#F59E0B' ? '245,158,11' : '16,185,129'},0.15)`
@@ -136,8 +136,8 @@ export default function AIProcess() {
                   onClick={() => setActive(i)}
                 >
                   {isDone
-                    ? <CheckCircle2 className="w-4 h-4" style={{ color: '#10B981' }} />
-                    : <step.icon className="w-4 h-4" style={{ color: isCurrent ? step.color : '#475569' }} />
+                    ? <CheckCircle2 className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: '#10B981' }} />
+                    : <step.icon className="w-3.5 h-3.5 sm:w-4 sm:h-4" style={{ color: isCurrent ? step.color : '#475569' }} />
                   }
                 </motion.div>
                 {/* Pulse ring */}

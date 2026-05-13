@@ -75,7 +75,7 @@ function ExpoNav({
   const labels = ['HERO', 'METRICS', 'PROCESS', 'MAP', 'CLIENTS', 'FRANCHISE'];
   return (
     <motion.div
-      className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-3 px-5 py-3 rounded-2xl"
+      className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 sm:gap-3 px-3 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl max-w-[95vw] overflow-x-auto scrollbar-hide"
       animate={isLight
         ? { background: 'rgba(255,255,255,0.92)', borderColor: 'rgba(22,163,74,0.20)', boxShadow: '0 4px 24px rgba(0,0,0,0.08)' }
         : { background: 'rgba(8,13,28,0.94)', borderColor: 'rgba(22,163,74,0.18)', boxShadow: '0 0 24px rgba(22,163,74,0.06)' }
@@ -94,7 +94,7 @@ function ExpoNav({
           onClick={() => onGoTo(i)}
           className="flex flex-col items-center gap-1 group"
         >
-          <span className={`text-xs font-bold font-mono uppercase tracking-wider transition-colors ${
+          <span className={`hidden sm:block text-[9px] sm:text-xs font-bold font-mono uppercase tracking-wider transition-colors ${
             i === currentIndex
               ? 'text-green-500'
               : isLight ? 'text-slate-400 group-hover:text-slate-600' : 'text-slate-700 group-hover:text-slate-500'
@@ -262,15 +262,15 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
             transform: 'scale(2.5)',
           }}
         />
-        <p className="impact-number" style={{ fontSize: 'clamp(4rem, 9vw, 7rem)' }}>
+        <p className="impact-number text-5xl sm:text-7xl md:text-8xl">
           3,000,000+
         </p>
         <motion.p
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.9 }}
-          className="font-semibold tracking-widest uppercase mt-1"
-          style={{ fontSize: 'clamp(1.25rem, 2vw, 1.5rem)', letterSpacing: '0.18em', color: '#374151' }}
+          className="font-semibold tracking-widest uppercase mt-1 text-sm sm:text-xl md:text-2xl"
+          style={{ letterSpacing: '0.18em', color: '#374151' }}
         >
           Garments Cared For Every Year
         </motion.p>
@@ -297,8 +297,8 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
               minWidth: 80,
             }}
           >
-            <p className="font-black num leading-none" style={{ color: c, fontSize: 'clamp(1.5rem, 2.8vw, 2.2rem)' }}>{v}</p>
-            <p className="text-lg uppercase tracking-wide font-semibold mt-1" style={{ color: '#374151' }}>{l}</p>
+            <p className="font-black num leading-none text-xl sm:text-2xl md:text-3xl" style={{ color: c }}>{v}</p>
+            <p className="text-[8px] sm:text-[10px] md:text-xs font-bold uppercase tracking-widest text-slate-400 mt-0.5" style={{ color: '#374151' }}>{l}</p>
           </div>
         ))}
       </motion.div>
@@ -340,17 +340,17 @@ function SlideMetrics({ metrics, liveEvents, tick }: {
 }) {
   const spiking = useAttentionSpike(12000, 1200);
   const BIG = [
-    { label: 'Orders Today',     value: metrics.ordersToday,   suffix: '',    color: '#22C55E', size: 'text-8xl' },
-    { label: 'Revenue Today',    value: null, raw: fmt(metrics.revenueToday), color: '#10B981', size: 'text-7xl' },
-    { label: 'Stores Active',    value: metrics.activeStores,  suffix: '+',   color: '#818CF8', size: 'text-8xl' },
-    { label: 'Processing Now',   value: metrics.processingNow, suffix: '',    color: '#F59E0B', size: 'text-7xl' },
+    { label: 'Orders Today',     value: metrics.ordersToday,   suffix: '',    color: '#22C55E', size: 'text-4xl sm:text-6xl md:text-8xl' },
+    { label: 'Revenue Today',    value: null, raw: fmt(metrics.revenueToday), color: '#10B981', size: 'text-3xl sm:text-5xl md:text-7xl' },
+    { label: 'Stores Active',    value: metrics.activeStores,  suffix: '+',   color: '#818CF8', size: 'text-4xl sm:text-6xl md:text-8xl' },
+    { label: 'Processing Now',   value: metrics.processingNow, suffix: '',    color: '#F59E0B', size: 'text-3xl sm:text-5xl md:text-7xl' },
   ];
 
   return (
     <div className="flex flex-col h-full px-4 py-4">
       <div className="text-center mb-6 flex-shrink-0">
         <SLabel>Live Command Center</SLabel>
-        <h2 className="font-black text-slate-50 leading-tight" style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)' }}>
+        <h2 className="font-black text-slate-50 leading-tight text-3xl sm:text-5xl md:text-7xl">
           Real-time Network{' '}
           <span style={{ background: 'linear-gradient(135deg, #22C55E, #16A34A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
             Performance
@@ -381,7 +381,7 @@ function SlideMetrics({ metrics, liveEvents, tick }: {
                 <AnimatedCounter value={value ?? 0} suffix={BIG[i]?.suffix ?? ''} decimals={0} duration={1.5} className="" />
               )}
             </div>
-            <p className="text-xl uppercase tracking-wide font-semibold font-mono mt-1" style={{ color: `${color}CC` }}>{label}</p>
+            <p className="text-[10px] sm:text-lg md:text-xl uppercase tracking-wide font-semibold font-mono mt-1" style={{ color: `${color}CC` }}>{label}</p>
           </motion.div>
         ))}
       </div>
@@ -390,7 +390,7 @@ function SlideMetrics({ metrics, liveEvents, tick }: {
       <div className="live-feed-panel flex-1 min-h-0">
         <div className="live-feed-header">
           <span className="live-dot-green" style={{ width: 7, height: 7, flexShrink: 0 }} />
-          <span className="text-xl font-bold uppercase tracking-widest font-mono" style={{ color: '#4ADE80' }}>Live Activity Feed</span>
+          <span className="text-xs sm:text-lg md:text-xl font-bold uppercase tracking-widest font-mono" style={{ color: '#4ADE80' }}>Live Activity Feed</span>
         </div>
         <div className="overflow-y-auto h-[calc(100%-40px)] divide-y divide-slate-800/40">
           <AnimatePresence initial={false}>
@@ -404,8 +404,8 @@ function SlideMetrics({ metrics, liveEvents, tick }: {
                 className="flex items-center gap-3 px-4 py-3"
               >
                 <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ background: ev.color, boxShadow: `0 0 8px ${ev.color}` }} />
-                <span className="text-xl font-mono" style={{ color: ev.color }}>{ev.text}</span>
-                <span className="ml-auto text-lg text-slate-400 font-mono flex-shrink-0">
+                <span className="text-xs sm:text-lg md:text-xl font-mono" style={{ color: ev.color }}>{ev.text}</span>
+                <span className="ml-auto text-[10px] sm:text-base md:text-lg text-slate-400 font-mono flex-shrink-0">
                   {Math.floor((Date.now() - ev.ts) / 1000)}s ago
                 </span>
               </motion.div>
@@ -448,7 +448,7 @@ function SlideProcess() {
   return (
     <div className="flex flex-col items-center justify-start h-full px-6 py-6 overflow-y-auto">
       <SLabel>AI Laundry Pipeline</SLabel>
-      <h2 className="font-black text-slate-50 text-center mb-2" style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)' }}>
+      <h2 className="font-black text-slate-50 text-center mb-2 text-2xl sm:text-5xl md:text-7xl">
         Every Order,{' '}
         <span style={{ background: 'linear-gradient(135deg, #22C55E, #16A34A)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
           Precision-Tracked
@@ -485,7 +485,7 @@ function SlideProcess() {
                       transition={{ duration: 1.3, repeat: Infinity }} />
                   )}
                 </motion.div>
-                <span className="text-base font-bold uppercase tracking-wider"
+                <span className="text-[8px] sm:text-xs md:text-base font-bold uppercase tracking-wider"
                   style={{ color: isCurrent ? step.color : isDone ? '#10B981' : '#64748B' }}>
                   {step.label}
                 </span>
@@ -602,8 +602,8 @@ function SlideEnterprise() {
       style={{ background: 'linear-gradient(160deg, #F8FAFC 0%, #FFFFFF 60%, #F0FDF4 100%)' }}>
       <div className="text-center mb-6 flex-shrink-0">
         <SLabel light>Enterprise Clients</SLabel>
-        <h2 className="font-black text-slate-800" style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)' }}>
-          India&apos;s Most Trusted{' '}
+        <h2 className="font-black text-slate-800 text-2xl sm:text-5xl md:text-7xl">
+          World&apos;s Most Trusted{' '}
           <span style={{ background: 'linear-gradient(135deg, #15803D, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
             Laundry Partner
           </span>
@@ -626,9 +626,9 @@ function SlideEnterprise() {
             className="rounded-xl p-4 text-center bg-white"
             style={{ border: '1px solid rgba(22,163,74,0.12)', boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}
           >
-            <div className="text-3xl mb-2">{icon}</div>
-            <p className="text-lg font-bold text-slate-700">{name}</p>
-            <p className="text-base font-medium mt-0.5" style={{ color: '#4B5563' }}>{desc}</p>
+            <div className="text-xl sm:text-3xl mb-2">{icon}</div>
+            <p className="text-[10px] sm:text-lg font-bold text-slate-700">{name}</p>
+            <p className="text-[8px] sm:text-base font-medium mt-0.5" style={{ color: '#4B5563' }}>{desc}</p>
           </motion.div>
         ))}
       </div>
@@ -642,8 +642,8 @@ function SlideEnterprise() {
         ].map(({ v, l, c }) => (
           <div key={l} className="rounded-xl p-3 text-center bg-white"
             style={{ border: `1px solid ${c}25`, boxShadow: '0 2px 10px rgba(0,0,0,0.04)' }}>
-            <p className="text-5xl font-black num" style={{ color: c }}>{v}</p>
-            <p className="text-xl uppercase tracking-wide font-semibold mt-1" style={{ color: '#374151' }}>{l}</p>
+            <p className="text-xl sm:text-5xl font-black num" style={{ color: c }}>{v}</p>
+            <p className="text-[10px] sm:text-xl uppercase tracking-wide font-semibold mt-1" style={{ color: '#374151' }}>{l}</p>
           </div>
         ))}
       </div>
@@ -656,21 +656,9 @@ function SlideEnterprise() {
 // ══════════════════════════════════════════════════════════
 function SlideFranchise() {
   return (
-    <div className="flex flex-col h-full px-4 py-4"
+    <div className="flex flex-col h-full overflow-y-auto px-2 sm:px-4 pt-2 pb-6 sm:py-8 scrollbar-hide"
       style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 100%)' }}>
-      <div className="text-center mb-3 flex-shrink-0">
-        <SLabel light>Franchise Opportunity</SLabel>
-        <h2 className="font-black text-slate-800 leading-tight" style={{ fontSize: 'clamp(1.8rem, 3vw, 2.6rem)' }}>
-          Own a UClean Store —{' '}
-          <span style={{ background: 'linear-gradient(135deg, #15803D, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-            Calculate Your Returns
-          </span>
-        </h2>
-        <p className="text-lg mt-1 font-medium" style={{ color: '#374151', letterSpacing: '0.01em' }}>
-          Based on 800+ existing franchisees &nbsp;·&nbsp; Starting from ₹8L investment
-        </p>
-      </div>
-      <div className="flex-1 min-h-0 flex flex-col">
+      <div className="flex-1 flex flex-col items-center justify-start sm:justify-center min-h-max pb-16">
         <FranchiseCTA />
       </div>
     </div>
