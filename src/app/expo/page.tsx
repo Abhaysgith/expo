@@ -206,7 +206,7 @@ function SLabel({ children, light = false }: { children: React.ReactNode; light?
 // ══════════════════════════════════════════════════════════
 function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string } | null }) {
   return (
-    <div className="flex flex-col items-center justify-center h-full text-center px-6 relative"
+    <div className="flex flex-col items-center justify-start h-full text-center px-6 py-6 relative overflow-y-auto"
       style={{ background: 'linear-gradient(160deg, #F0FDF4 0%, #FFFFFF 55%, #DCFCE7 100%)' }}>
 
       {/* Ambient freshness bubbles */}
@@ -224,9 +224,9 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
         initial={{ opacity: 0, y: -10 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 0.6, ease: [0.4, 0, 0.2, 1] }}
-        className="mb-5 relative z-10"
+        className="mb-3 relative z-10"
       >
-        <Image src="/uclean-logo.png" alt="UClean" width={200} height={52} style={{ objectFit: 'contain' }} priority />
+        <Image src="/uclean-logo.png" alt="UClean" width={180} height={46} style={{ objectFit: 'contain' }} priority />
       </motion.div>
 
       {/* Headline */}
@@ -253,7 +253,7 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
         initial={{ opacity: 0, scale: 0.88, filter: 'blur(8px)' }}
         animate={{ opacity: 1, scale: 1, filter: 'blur(0px)' }}
         transition={{ duration: 0.9, delay: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        className="relative z-10 my-6"
+        className="relative z-10 my-4"
       >
         {/* Soft glow halo behind number */}
         <div className="absolute inset-0 rounded-full pointer-events-none"
@@ -262,7 +262,7 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
             transform: 'scale(2.5)',
           }}
         />
-        <p className="impact-number" style={{ fontSize: 'clamp(5rem, 11vw, 9rem)' }}>
+        <p className="impact-number" style={{ fontSize: 'clamp(4rem, 9vw, 7rem)' }}>
           3,000,000+
         </p>
         <motion.p
@@ -304,7 +304,7 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
       </motion.div>
 
       {/* Live event toast */}
-      <div className="mt-5 h-9 flex items-center justify-center relative z-10">
+      <div className="mt-3 h-9 flex items-center justify-center relative z-10">
         <AnimatePresence mode="wait">
           {latestEvent && (
             <motion.div
@@ -446,7 +446,7 @@ function SlideProcess() {
   const s = PROCESS_STEPS[active];
 
   return (
-    <div className="flex flex-col items-center justify-center h-full px-6">
+    <div className="flex flex-col items-center justify-start h-full px-6 py-6 overflow-y-auto">
       <SLabel>AI Laundry Pipeline</SLabel>
       <h2 className="font-black text-slate-50 text-center mb-2" style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)' }}>
         Every Order,{' '}
@@ -454,10 +454,10 @@ function SlideProcess() {
           Precision-Tracked
         </span>
       </h2>
-      <p className="text-xl font-mono mb-8" style={{ color: '#9CA3AF' }}>Order ID: <span style={{ color: '#22C55E' }}>{orderId}</span></p>
+      <p className="text-xl font-mono mb-5" style={{ color: '#9CA3AF' }}>Order ID: <span style={{ color: '#22C55E' }}>{orderId}</span></p>
 
       {/* Steps timeline */}
-      <div className="flex items-center w-full max-w-3xl mb-8 gap-2">
+      <div className="flex items-center w-full max-w-3xl mb-5 gap-2">
         {PROCESS_STEPS.map((step, i) => {
           const isDone    = i < active;
           const isCurrent = i === active;
@@ -544,7 +544,7 @@ function SlideProcess() {
       </AnimatePresence>
 
       {/* USP pills */}
-      <div className="flex flex-wrap gap-3 mt-8 justify-center">
+      <div className="flex flex-wrap gap-3 mt-5 justify-center">
         {[
           { v: '48–72h', l: 'Turnaround',     c: '#22C55E' },
           { v: 'Free',   l: 'Pickup/Delivery', c: '#10B981' },
@@ -715,7 +715,7 @@ export default function ExpoPage() {
 
 
       {/* Main slide area — offset by EntryStrip (80px) + bottom nav (80px) */}
-      <div className="relative z-10 w-full" style={{ height: 'calc(100vh - 80px - 80px)', marginTop: 80 }}>
+      <div className="relative z-10 w-full overflow-hidden" style={{ height: 'calc(100vh - 80px - 80px)', marginTop: 80 }}>
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}

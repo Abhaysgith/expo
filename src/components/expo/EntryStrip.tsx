@@ -40,7 +40,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
           className="hidden sm:block font-semibold"
           style={{ fontSize: '1.35rem', color: isLight ? '#1F2937' : '#D1D5DB' }}
         >
-          India&apos;s Largest Laundry Network
+          World&apos;s Largest Laundry Network
         </span>
       </div>
 
