@@ -4,7 +4,7 @@ import { getDb } from '@/lib/db';
 import { leadSchema } from '@/lib/validation/schemas';
 import { getSession } from '@/features/auth/session';
 import { ok, err } from '@/lib/api';
-import { sendFranchiseLeadWhatsApp } from '@/features/notifications/providers/zixflow';
+import { sendFranchiseLeadWhatsApp, sendSalesLeadAlertWhatsApp } from '@/features/notifications/providers/zixflow';
 
 export async function GET() {
   const session = await getSession();
@@ -78,21 +78,27 @@ export async function POST(req: NextRequest) {
        VALUES (?, ?, 'whatsapp', ?, ?, ?)`
     ).run(jobId, id, jobPayload, now, now);
 
-    // Fire WhatsApp (non-blocking — don't await in the response path)
+    // Fire WhatsApp to customer (non-blocking)
     sendFranchiseLeadWhatsApp(customerPhone, customerName, id)
       .then(result => {
         const status    = result.success ? 'sent' : 'failed';
-        const waStatus  = result.success ? 'sent' : 'failed';
         const updateNow = new Date().toISOString();
         db.prepare(
           `UPDATE notification_jobs SET status=?, attempts=1, last_error=?, updated_at=? WHERE id=?`
         ).run(status, result.success ? null : JSON.stringify(result.response), updateNow, jobId);
         db.prepare(
           `UPDATE leads SET whatsapp_status=?, updated_at=? WHERE id=?`
-        ).run(waStatus, updateNow, id);
-        console.log(`[WA] lead=${id} status=${status}`);
+        ).run(status, updateNow, id);
+        console.log(`[WA customer] lead=${id} status=${status}`);
       })
-      .catch(e => console.error('[WA] unexpected error:', e));
+      .catch(e => console.error('[WA customer] unexpected error:', e));
+
+    // Fire WhatsApp alert to sales person (non-blocking)
+    if (session.phone) {
+      sendSalesLeadAlertWhatsApp(session.phone, customerName, id)
+        .then(result => console.log(`[WA sales] lead=${id} success=${result.success}`))
+        .catch(e => console.error('[WA sales] unexpected error:', e));
+    }
   }
 
   const lead = db.prepare('SELECT * FROM leads WHERE id = ?').get(id);

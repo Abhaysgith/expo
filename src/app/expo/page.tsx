@@ -16,6 +16,7 @@ import EnterpriseTrustBar            from '@/components/expo/EnterpriseTrustBar'
 import FranchiseCTA                  from '@/components/expo/FranchiseCTA';
 import AnimatedCounter               from '@/components/ui/AnimatedCounter';
 import EntryStrip                    from '@/components/expo/EntryStrip';
+import OfflineSyncProvider           from '@/components/sales/OfflineSyncProvider';
 
 // ─── Helpers ──────────────────────────────────────────────
 function fmt(n: number): string {
@@ -684,6 +685,7 @@ export default function ExpoPage() {
   };
 
   return (
+    <OfflineSyncProvider>
     <motion.div
       className="relative w-screen h-screen overflow-hidden"
       animate={{ backgroundColor: isLightSlide ? '#F5F9F6' : '#0A0F1E' }}
@@ -731,5 +733,6 @@ export default function ExpoPage() {
         onGoTo={(i) => goTo(DEMO_SLIDES[i])}
       />
     </motion.div>
+    </OfflineSyncProvider>
   );
 }

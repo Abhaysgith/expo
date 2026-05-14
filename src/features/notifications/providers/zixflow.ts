@@ -89,9 +89,8 @@ export async function sendOrderConfirmWhatsApp(
 }
 
 /**
- * Send franchise lead notification.
+ * Send franchise lead notification to the CUSTOMER.
  * Uses order_confirm as a placeholder template for now.
- * Replace templateName with a dedicated franchise template later.
  */
 export async function sendFranchiseLeadWhatsApp(
   mobile: string,
@@ -102,6 +101,40 @@ export async function sendFranchiseLeadWhatsApp(
     mobile,
     'order_confirm',                         // ← swap to franchise template later
     { body_1: customerName, button_1: leadId.slice(0, 8) },
+    TRANS_KEY,
+  );
+}
+
+/**
+ * Notify the SALES PERSON that their lead was captured successfully.
+ * Uses same order_confirm template for now.
+ */
+export async function sendSalesLeadAlertWhatsApp(
+  salesPhone: string,
+  customerName: string,
+  leadId: string,
+) {
+  return send(
+    salesPhone,
+    'order_confirm',
+    { body_1: customerName, button_1: leadId.slice(0, 8) },
+    TRANS_KEY,
+  );
+}
+
+/**
+ * Notify the SALES PERSON that a customer clicked "Call Me" CTA.
+ * Uses same order_confirm template for now — swap to a dedicated template later.
+ */
+export async function sendCallRequestAlertWhatsApp(
+  salesPhone: string,
+  customerName: string,
+  customerPhone: string,
+) {
+  return send(
+    salesPhone,
+    'order_confirm',
+    { body_1: customerName, button_1: customerPhone },
     TRANS_KEY,
   );
 }

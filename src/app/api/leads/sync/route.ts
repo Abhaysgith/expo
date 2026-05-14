@@ -5,7 +5,7 @@ import { syncLeadSchema } from '@/lib/validation/schemas';
 import { getSession } from '@/features/auth/session';
 import { ok, err } from '@/lib/api';
 import { v4 as uuidv4 } from 'uuid';
-import { sendFranchiseLeadWhatsApp } from '@/features/notifications/providers/zixflow';
+import { sendFranchiseLeadWhatsApp, sendSalesLeadAlertWhatsApp } from '@/features/notifications/providers/zixflow';
 
 const syncBodySchema = z.object({
   leads: z.array(syncLeadSchema),
@@ -83,17 +83,25 @@ export async function POST(req: NextRequest) {
 
   // Fire WhatsApp for each synced lead (non-blocking)
   for (const lead of parsed.data.leads) {
+    // Notify customer
     sendFranchiseLeadWhatsApp(lead.customerPhone, lead.customerName, lead.id)
       .then(result => {
-        const status   = result.success ? 'sent' : 'failed';
+        const status    = result.success ? 'sent' : 'failed';
         const updateNow = new Date().toISOString();
         db.prepare(`UPDATE notification_jobs SET status=?, attempts=1, last_error=?, updated_at=? WHERE lead_id=?`)
           .run(status, result.success ? null : JSON.stringify(result.response), updateNow, lead.id);
         db.prepare(`UPDATE leads SET whatsapp_status=?, updated_at=? WHERE id=?`)
           .run(status, updateNow, lead.id);
-        console.log(`[WA sync] lead=${lead.id} status=${status}`);
+        console.log(`[WA sync customer] lead=${lead.id} status=${status}`);
       })
-      .catch(e => console.error('[WA sync] unexpected error:', e));
+      .catch(e => console.error('[WA sync customer] unexpected error:', e));
+
+    // Notify sales person
+    if (session.phone) {
+      sendSalesLeadAlertWhatsApp(session.phone, lead.customerName, lead.id)
+        .then(result => console.log(`[WA sync sales] lead=${lead.id} success=${result.success}`))
+        .catch(e => console.error('[WA sync sales] unexpected error:', e));
+    }
   }
 
   return ok({ synced: parsed.data.leads.length }, 'Leads synced');

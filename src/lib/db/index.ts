@@ -3,7 +3,7 @@ import path from 'path';
 import fs from 'fs';
 import { schema } from './schema';
 
-const DATA_DIR = path.join(process.cwd(), 'data');
+const DATA_DIR = process.env.DB_DIR || path.join(process.cwd(), 'data');
 const DB_PATH = path.join(DATA_DIR, 'expo.db');
 
 if (!fs.existsSync(DATA_DIR)) {
