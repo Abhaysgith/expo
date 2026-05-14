@@ -91,6 +91,7 @@ function extractPhone(payload: Record<string, unknown>): string | null {
     payload.sender,
     payload.mobile,
     payload.phone,
+    payload.lead,
     (payload.contact as Record<string, unknown>)?.phone,
     (payload.contact as Record<string, unknown>)?.mobile,
     (payload.message as Record<string, unknown>)?.from,
