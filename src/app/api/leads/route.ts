@@ -43,7 +43,7 @@ export async function POST(req: NextRequest) {
     return err(parsed.error.issues.map(i => i.message).join(', '), 422);
   }
 
-  const { customerName, customerPhone, customerEmail, city, note, budget, brochureUrl } = parsed.data;
+  const { customerName, customerPhone, customerEmail, city, note, budget, preferredLocation, brochureUrl } = parsed.data;
 
   const db = getDb();
   const id = uuidv4();
@@ -52,8 +52,8 @@ export async function POST(req: NextRequest) {
   db.prepare(
     `INSERT INTO leads
       (id, customer_name, customer_phone, customer_email, city, note, budget,
-       owner_user_id, owner_name, owner_phone, brochure_url, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
+       preferred_location, owner_user_id, owner_name, owner_phone, brochure_url, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`
   ).run(
     id,
     customerName,
@@ -62,6 +62,7 @@ export async function POST(req: NextRequest) {
     city,
     note || null,
     budget || null,
+    preferredLocation || null,
     isLoggedInSales ? session.userId      : null,
     isLoggedInSales ? session.name        : DEFAULT_OWNER.name,
     isLoggedInSales ? session.phone       : DEFAULT_OWNER.phone,

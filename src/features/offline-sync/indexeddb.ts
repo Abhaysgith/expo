@@ -11,6 +11,7 @@ export interface OfflineLead {
   city: string;
   note?: string;
   budget?: string;
+  preferredLocation?: string;
   ownerName?: string;
   ownerPhone?: string;
   syncStatus: 'pending' | 'synced';

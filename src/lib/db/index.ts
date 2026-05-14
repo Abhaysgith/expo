@@ -31,4 +31,12 @@ function runMigrations(db: Database.Database) {
   for (const stmt of statements) {
     db.exec(stmt + ';');
   }
+
+  // Additive column migrations — safe to run on existing databases
+  const alterations = [
+    `ALTER TABLE leads ADD COLUMN preferred_location TEXT`,
+  ];
+  for (const stmt of alterations) {
+    try { db.exec(stmt + ';'); } catch { /* column already exists — ignore */ }
+  }
 }

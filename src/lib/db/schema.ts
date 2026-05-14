@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS leads (
   status TEXT NOT NULL DEFAULT 'new' CHECK(status IN ('new','contacted','qualified','lost')),
   sync_status TEXT NOT NULL DEFAULT 'pending' CHECK(sync_status IN ('pending','synced')),
   whatsapp_status TEXT NOT NULL DEFAULT 'none' CHECK(whatsapp_status IN ('none','queued','sent','failed')),
+  preferred_location TEXT,
   brochure_url TEXT,
   brochure_sent INTEGER NOT NULL DEFAULT 0,
   created_at TEXT NOT NULL DEFAULT (datetime('now')),

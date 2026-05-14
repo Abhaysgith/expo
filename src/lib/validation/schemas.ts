@@ -25,6 +25,7 @@ export const leadSchema = z.object({
   city: z.string().min(2).max(100),
   note: z.string().max(1000).optional(),
   budget: z.string().optional(),
+  preferredLocation: z.string().max(200).optional(),
   brochureUrl: z.string().url().optional().or(z.literal('')),
 });
 
@@ -36,5 +37,6 @@ export const syncLeadSchema = z.object({
   city: z.string().min(2).max(100),
   note: z.string().optional(),
   budget: z.string().optional(),
+  preferredLocation: z.string().optional(),
   createdAt: z.string(),
 });

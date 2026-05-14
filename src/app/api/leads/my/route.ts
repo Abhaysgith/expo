@@ -10,7 +10,7 @@ export async function GET() {
   const db = getDb();
   const leads = db.prepare(
     `SELECT id, customer_name, customer_phone, customer_email, city, budget, note,
-            status, whatsapp_status, created_at
+            preferred_location, status, whatsapp_status, created_at
      FROM leads
      WHERE owner_user_id = ? AND deleted_at IS NULL
      ORDER BY created_at DESC`

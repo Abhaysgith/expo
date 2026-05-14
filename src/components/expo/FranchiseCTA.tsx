@@ -143,6 +143,7 @@ export default function FranchiseCTA() {
     email: '',
     phone: '',
     city: '',
+    preferredLocation: '',
     investmentBudget: '',
     message: ''
   });
@@ -174,6 +175,7 @@ export default function FranchiseCTA() {
       customerEmail: formData.email,
       customerPhone: formData.phone,
       city: formData.city,
+      preferredLocation: formData.preferredLocation,
       budget: formData.investmentBudget,
       note: formData.message,
     };
@@ -202,6 +204,7 @@ export default function FranchiseCTA() {
           customerEmail: formData.email || undefined,
           customerPhone: formData.phone,
           city: formData.city,
+          preferredLocation: formData.preferredLocation || undefined,
           budget: formData.investmentBudget || undefined,
           note: formData.message || undefined,
           ownerName: salesUser?.name,
@@ -237,7 +240,7 @@ export default function FranchiseCTA() {
   };
 
   const handleReset = () => {
-    setFormData({ name: '', email: '', phone: '', city: '', investmentBudget: '', message: '' });
+    setFormData({ name: '', email: '', phone: '', city: '', preferredLocation: '', investmentBudget: '', message: '' });
     setSubmitted(false);
     setSavedOffline(false);
   };
@@ -266,14 +269,14 @@ export default function FranchiseCTA() {
       // Build unified rows — server leads first, then pending offline
       const serverRows = serverLeads.map((l: ServerLead) => [
         l.customer_name ?? '', l.customer_phone ?? '', l.customer_email ?? '',
-        l.city ?? '', l.budget ?? '', (l.note ?? '').replace(/,/g, ';'),
+        l.city ?? '', l.preferred_location ?? '', l.budget ?? '', (l.note ?? '').replace(/,/g, ';'),
         l.status ?? '', l.whatsapp_status ?? '',
         new Date(l.created_at as string).toLocaleString('en-IN'),
         'Synced',
       ]);
       const offlineRows = myOffline.map(l => [
         l.customerName, l.customerPhone, l.customerEmail ?? '',
-        l.city, l.budget ?? '', (l.note ?? '').replace(/,/g, ';'),
+        l.city, l.preferredLocation ?? '', l.budget ?? '', (l.note ?? '').replace(/,/g, ';'),
         'new', '—',
         new Date(l.createdAt).toLocaleString('en-IN'),
         'Pending (offline)',
@@ -282,7 +285,7 @@ export default function FranchiseCTA() {
       const allRows = [...serverRows, ...offlineRows];
       if (allRows.length === 0) { alert('No leads yet.'); setDownloading(false); return; }
 
-      const headers = ['Name', 'Phone', 'Email', 'City', 'Budget', 'Note', 'Status', 'WhatsApp', 'Created At', 'Sync'];
+      const headers = ['Name', 'Phone', 'Email', 'City', 'Preferred Location', 'Budget', 'Note', 'Status', 'WhatsApp', 'Created At', 'Sync'];
       const csv = [headers, ...allRows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
       const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
       const url = URL.createObjectURL(blob);
@@ -400,7 +403,7 @@ export default function FranchiseCTA() {
             <div className="space-y-1 sm:space-y-1.5">
               <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
                 <Mail className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
-                Email
+                Email <span className="text-slate-300 normal-case font-normal">(optional)</span>
               </label>
               <input
                 type="email"
@@ -445,8 +448,22 @@ export default function FranchiseCTA() {
 
           <div className="space-y-1 sm:space-y-1.5">
             <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+              <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
+              Preferred Location <span className="text-slate-300 normal-case font-normal">(optional)</span>
+            </label>
+            <input
+              type="text"
+              value={formData.preferredLocation}
+              onChange={(e) => setFormData({ ...formData, preferredLocation: e.target.value })}
+              className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all"
+              placeholder="e.g. Andheri West, Mumbai"
+            />
+          </div>
+
+          <div className="space-y-1 sm:space-y-1.5">
+            <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
               <IndianRupee className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
-              Investment Budget
+              Investment Budget <span className="text-slate-300 normal-case font-normal">(optional)</span>
             </label>
             <div className="relative">
               <button
@@ -492,7 +509,7 @@ export default function FranchiseCTA() {
           <div className="space-y-1 sm:space-y-1.5">
             <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
               <MessageSquare className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
-              Note
+              Note <span className="text-slate-300 normal-case font-normal">(optional)</span>
             </label>
             <textarea
               rows={1}

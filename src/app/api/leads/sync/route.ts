@@ -32,8 +32,8 @@ export async function POST(req: NextRequest) {
   const upsert = db.prepare(
     `INSERT INTO leads
       (id, customer_name, customer_phone, customer_email, city, note, budget,
-       owner_user_id, owner_name, owner_phone, sync_status, created_at, updated_at)
-     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced', ?, datetime('now'))
+       preferred_location, owner_user_id, owner_name, owner_phone, sync_status, created_at, updated_at)
+     VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, 'synced', ?, datetime('now'))
      ON CONFLICT(id) DO UPDATE SET
        customer_name = excluded.customer_name,
        customer_phone = excluded.customer_phone,
@@ -41,6 +41,7 @@ export async function POST(req: NextRequest) {
        city = excluded.city,
        note = excluded.note,
        budget = excluded.budget,
+       preferred_location = excluded.preferred_location,
        sync_status = 'synced',
        updated_at = datetime('now')`
   );
@@ -61,6 +62,7 @@ export async function POST(req: NextRequest) {
           lead.city,
           lead.note || null,
           lead.budget || null,
+          lead.preferredLocation || null,
           session.userId,
           session.name,
           session.phone,
