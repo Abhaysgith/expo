@@ -33,7 +33,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
           alt="UClean"
           width={120}
           height={32}
-          className="w-20 sm:w-[120px]"
+          className="w-24 sm:w-[120px]"
           style={{ objectFit: 'contain' }}
           priority
         />
