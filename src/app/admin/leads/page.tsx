@@ -5,7 +5,7 @@ import AdminLeadList from '@/components/admin/AdminLeadList';
 import LogoutButton from '@/components/shared/LogoutButton';
 import { Users, TrendingUp, Clock } from 'lucide-react';
 
-export const dynamic = 'force-dynamic';
+export const dynamic  = 'force-dynamic';
 
 export default async function AdminLeadsPage() {
   const session = await getSession();
