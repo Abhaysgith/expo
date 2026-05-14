@@ -52,7 +52,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
         transition={{ delay: 0.3 }}
       >
         {[
-          { v: '800+', l: 'Stores' },
+          { v: '900+', l: 'Stores' },
           { v: '3M+',  l: 'Customers' },
           { v: '10+',  l: 'Countries' },
         ].map(({ v, l }, i) => (

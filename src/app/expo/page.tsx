@@ -285,7 +285,7 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
         className="flex flex-wrap gap-2.5 justify-center relative z-10"
       >
         {[
-          { v: '800+',  l: 'Stores',     c: '#16A34A' },
+          { v: '900+',  l: 'Stores',     c: '#16A34A' },
           { v: '10+',   l: 'Countries',  c: '#818CF8' },
           { v: '4.7★',  l: 'Rating',     c: '#F59E0B' },
           { v: '94%',   l: 'Renewal Rate', c: '#10B981' },
