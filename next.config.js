@@ -7,6 +7,10 @@ const withPWA = require('next-pwa')({
   fallbacks: {
     document: '/offline.html', // served when a page is not cached and user is offline
   },
+  additionalManifestEntries: [
+    { url: '/expo', revision: null },       // precache the expo page so it works offline immediately
+    { url: '/offline.html', revision: null },
+  ],
   runtimeCaching: [
     {
       // Cache all /public/data/ JSON files (the offline data store)
