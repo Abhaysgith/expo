@@ -671,7 +671,25 @@ function SlideFranchise() {
 // ══════════════════════════════════════════════════════════
 export default function ExpoPage() {
   const { metrics, liveEvents, latestEvent, tick } = useSimulationEngine();
-  const { currentSlide, currentIndex, progress, isPlaying, goTo, togglePlay, next, prev } = useDemoLoop();
+  const { currentSlide, currentIndex, progress, isPlaying, goTo, togglePlay, pause, resume, next, prev } = useDemoLoop();
+  const [isSalesLoggedIn, setIsSalesLoggedIn] = useState(false);
+
+  // Check if a sales person is logged in
+  useEffect(() => {
+    fetch('/api/auth/session')
+      .then(r => r.json())
+      .then(data => { if (data?.data?.user?.role === 'sales') setIsSalesLoggedIn(true); })
+      .catch(() => {});
+  }, []);
+
+  // Auto-pause on franchise slide when sales person is logged in
+  useEffect(() => {
+    if (currentSlide === 'franchise' && isSalesLoggedIn) {
+      pause();
+    } else if (currentSlide !== 'franchise' && isSalesLoggedIn) {
+      resume();
+    }
+  }, [currentSlide, isSalesLoggedIn, pause, resume]);
 
   const isLightSlide = LIGHT_SLIDES.has(currentSlide);
 

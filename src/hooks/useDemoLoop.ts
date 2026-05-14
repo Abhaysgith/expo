@@ -29,6 +29,8 @@ interface DemoLoopState {
   isPlaying: boolean;
   goTo: (slide: DemoSlide) => void;
   togglePlay: () => void;
+  pause: () => void;
+  resume: () => void;
   next: () => void;
   prev: () => void;
 }
@@ -105,6 +107,21 @@ export function useDemoLoop(): DemoLoopState {
     });
   }, [duration]);
 
+  const pause = useCallback(() => {
+    if (isPlayingRef.current) {
+      isPlayingRef.current = false;
+      setIsPlaying(false);
+    }
+  }, []);
+
+  const resume = useCallback(() => {
+    if (!isPlayingRef.current) {
+      startRef.current = performance.now() - (progressRef.current / 100) * SLIDE_DURATION[DEMO_SLIDES[indexRef.current]];
+      isPlayingRef.current = true;
+      setIsPlaying(true);
+    }
+  }, []);
+
   const next = useCallback(() => {
     setCurrentIndex(prev => {
       const n = (prev + 1) % DEMO_SLIDES.length;
@@ -127,5 +144,5 @@ export function useDemoLoop(): DemoLoopState {
     });
   }, []);
 
-  return { currentSlide, currentIndex, progress, isPlaying, goTo, togglePlay, next, prev };
+  return { currentSlide, currentIndex, progress, isPlaying, goTo, togglePlay, pause, resume, next, prev };
 }
