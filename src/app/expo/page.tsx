@@ -341,10 +341,10 @@ function SlideMetrics({ metrics, liveEvents, tick }: {
 }) {
   const spiking = useAttentionSpike(12000, 1200);
   const BIG = [
-    { label: 'Orders Today',     value: metrics.ordersToday,   suffix: '',    color: '#22C55E', size: 'text-4xl sm:text-6xl md:text-8xl' },
-    { label: 'GSV Today',        value: null, raw: fmt(metrics.revenueToday), color: '#10B981', size: 'text-3xl sm:text-5xl md:text-7xl' },
-    { label: 'Stores Active',    value: metrics.activeStores,  suffix: '+',   color: '#818CF8', size: 'text-4xl sm:text-6xl md:text-8xl' },
-    { label: 'Processing Now',   value: metrics.processingNow, suffix: '',    color: '#F59E0B', size: 'text-3xl sm:text-5xl md:text-7xl' },
+    { label: 'Orders Today',     value: metrics.ordersToday,   suffix: '',    color: '#22C55E', size: 'text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl' },
+    { label: 'GSV Today',        value: null, raw: fmt(metrics.revenueToday), color: '#10B981', size: 'text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl' },
+    { label: 'Stores Active',    value: metrics.activeStores,  suffix: '+',   color: '#818CF8', size: 'text-4xl sm:text-5xl md:text-6xl lg:text-5xl xl:text-6xl' },
+    { label: 'Processing Now',   value: metrics.processingNow, suffix: '',    color: '#F59E0B', size: 'text-3xl sm:text-4xl md:text-5xl lg:text-4xl xl:text-5xl' },
   ];
 
   return (
@@ -377,7 +377,7 @@ function SlideMetrics({ metrics, liveEvents, tick }: {
             }}
           >
             <div className="h-px mb-3" style={{ background: `linear-gradient(90deg, transparent, ${color}60, transparent)` }} />
-            <div className={`${size} font-black num leading-none mb-2`} style={{ color }}>
+            <div className={`${size} font-black num leading-none mb-2 truncate`} style={{ color }}>
               {raw ?? (
                 <AnimatedCounter value={value ?? 0} suffix={BIG[i]?.suffix ?? ''} decimals={0} duration={1.5} className="" />
               )}
