@@ -4,7 +4,7 @@
  */
 
 const ZIXFLOW_API = 'https://api.zixflow.com/api/v1/campaign/whatsapp/send';
-const PHONE_ID    = process.env.ZIXFLOW_PHONE_ID      || '911728805348205';
+const PHONE_ID    = process.env.ZIXFLOW_PHONE_ID      || '725043027370143';
 const API_KEY     = process.env.ZIXFLOW_API_KEY        || '';
 const TRANS_KEY   = process.env.ZIXFLOW_TRANSACTIONAL_KEY || '';
 
