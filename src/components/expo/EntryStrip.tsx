@@ -53,7 +53,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
       >
         {[
           { v: '900+', l: 'Stores' },
-          { v: '3M+',  l: 'Customers' },
+          { v: '5M+',  l: 'Customers' },
           { v: '10+',  l: 'Countries' },
         ].map(({ v, l }, i) => (
           <div key={l} className="flex items-center gap-2">

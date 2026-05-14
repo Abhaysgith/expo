@@ -9,16 +9,14 @@ interface Enterprise {
 }
 
 const ENTERPRISES: Enterprise[] = [
-  { name: 'Amazon',     sector: 'E-Commerce',  icon: '📦' },
-  { name: 'Myntra',     sector: 'Fashion',     icon: '👗' },
-  { name: 'Marriott',   sector: 'Hospitality', icon: '🏨' },
-  { name: 'MakeMyTrip', sector: 'Travel',      icon: '✈️' },
-  { name: 'Britannia',  sector: 'FMCG',        icon: '🍪' },
-  { name: 'Mahindra',   sector: 'Automotive',  icon: '🚗' },
-  { name: 'ISKCON',     sector: 'Religious',   icon: '🙏' },
-  { name: 'ITC Hotels', sector: 'Hospitality', icon: '🌟' },
-  { name: 'Lenskart',   sector: 'Retail',      icon: '👓' },
-  { name: 'OYO Rooms',  sector: 'Hospitality', icon: '🛎️' },
+  { name: 'Amazon',       sector: 'E-Commerce',  icon: '📦' },
+  { name: 'Myntra',       sector: 'Fashion',      icon: '👗' },
+  { name: 'Marriott',     sector: 'Hospitality',  icon: '🏨' },
+  { name: 'Radisson Blu', sector: 'Hospitality',  icon: '🌟' },
+  { name: 'Mahindra',     sector: 'Automotive',   icon: '🚗' },
+  { name: 'ISKCON',       sector: 'Religious',    icon: '🙏' },
+  { name: 'OYO Rooms',    sector: 'Hospitality',  icon: '🛎️' },
+  { name: 'Recipto',      sector: 'Technology',   icon: '🔁' },
 ];
 
 // Double for seamless loop

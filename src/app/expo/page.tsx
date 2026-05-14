@@ -638,7 +638,7 @@ function SlideEnterprise() {
       <div className="grid grid-cols-3 gap-4 mt-4 flex-shrink-0">
         {[
           { v: '50K+',   l: 'Daily Garments',  c: '#16A34A' },
-          { v: '200+',   l: 'Cities Served',   c: '#818CF8' },
+          { v: '250+',   l: 'Cities Served',   c: '#818CF8' },
           { v: '₹0',     l: 'Hidden Charges',  c: '#10B981' },
         ].map(({ v, l, c }) => (
           <div key={l} className="rounded-xl p-3 text-center bg-white"
