@@ -64,7 +64,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
               {v}
             </span>
             <span
-              className="font-semibold text-xs sm:text-xl hidden xs:inline sm:inline"
+              className="font-semibold text-xs sm:text-xl"
               style={{ color: isLight ? '#374151' : '#9CA3AF' }}
             >
               {l}

@@ -207,7 +207,7 @@ function SLabel({ children, light = false }: { children: React.ReactNode; light?
 // ══════════════════════════════════════════════════════════
 function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string } | null }) {
   return (
-    <div className="flex flex-col items-center justify-start h-full text-center px-6 py-6 relative overflow-y-auto"
+    <div className="flex flex-col items-center justify-center h-full text-center px-4 sm:px-6 py-4 sm:py-6 relative overflow-y-auto overflow-x-hidden"
       style={{ background: 'linear-gradient(160deg, #F0FDF4 0%, #FFFFFF 55%, #DCFCE7 100%)' }}>
 
       {/* Ambient freshness bubbles */}
@@ -705,7 +705,7 @@ export default function ExpoPage() {
 
 
       {/* Main slide area — offset by EntryStrip + bottom nav */}
-      <div className="relative z-10 w-full overflow-hidden mt-14 sm:mt-20 h-[calc(100vh-120px)] sm:h-[calc(100vh-160px)]">
+      <div className="relative z-10 w-full overflow-hidden mt-14 sm:mt-20 h-[calc(100dvh-120px)] sm:h-[calc(100dvh-160px)]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}

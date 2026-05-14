@@ -33,7 +33,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
         <link rel="apple-touch-icon" href="/fevicon.png" />
       </head>
-      <body className="bg-slate-950 text-slate-300 min-h-screen antialiased">
+      <body className="bg-slate-950 text-slate-300 min-h-screen antialiased overflow-x-hidden">
         {children}
       </body>
     </html>
