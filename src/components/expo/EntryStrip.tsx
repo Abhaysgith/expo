@@ -33,6 +33,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
           alt="UClean"
           width={120}
           height={32}
+          className="w-20 sm:w-[120px]"
           style={{ objectFit: 'contain' }}
           priority
         />
@@ -64,7 +65,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
               {v}
             </span>
             <span
-              className="font-semibold text-xs sm:text-xl"
+              className="font-semibold hidden sm:inline text-xs sm:text-xl"
               style={{ color: isLight ? '#374151' : '#9CA3AF' }}
             >
               {l}
