@@ -58,18 +58,21 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
           { v: '10+',  l: 'Countries' },
         ].map(({ v, l }, i) => (
           <div key={l} className="flex items-center gap-1 sm:gap-2">
-            <span
-              className="font-black text-sm sm:text-2xl"
-              style={{ color: isLight ? '#15803D' : '#4ADE80' }}
-            >
-              {v}
-            </span>
-            <span
-              className="font-semibold hidden sm:inline text-xs sm:text-xl"
-              style={{ color: isLight ? '#374151' : '#9CA3AF' }}
-            >
-              {l}
-            </span>
+            {/* Mobile: stacked number + label */}
+            <div className="flex flex-col items-center sm:flex-row sm:items-center sm:gap-2">
+              <span
+                className="font-black text-xs sm:text-2xl leading-tight"
+                style={{ color: isLight ? '#15803D' : '#4ADE80' }}
+              >
+                {v}
+              </span>
+              <span
+                className="font-semibold text-[9px] sm:text-xl leading-tight"
+                style={{ color: isLight ? '#374151' : '#9CA3AF' }}
+              >
+                {l}
+              </span>
+            </div>
             {i < 2 && (
               <span className="font-bold text-xs sm:text-base" style={{ color: isLight ? '#9CA3AF' : '#374151', marginLeft: 2 }}>·</span>
             )}
