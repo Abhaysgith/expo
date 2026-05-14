@@ -14,7 +14,7 @@ interface EntryStripProps {
 export default function EntryStrip({ isLight }: EntryStripProps) {
   return (
     <motion.div
-      className="fixed top-0 left-0 right-0 z-[60] h-20 flex items-center justify-between px-8"
+      className="fixed top-0 left-0 right-0 z-[60] h-14 sm:h-20 flex items-center justify-between px-4 sm:px-8"
       animate={isLight
         ? { backgroundColor: 'rgba(255,255,255,0.97)', borderBottomColor: 'rgba(22,163,74,0.18)' }
         : { backgroundColor: 'rgba(6,10,20,0.97)', borderBottomColor: 'rgba(22,163,74,0.14)' }
@@ -46,7 +46,7 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
 
       {/* Key stats — right */}
       <motion.div
-        className="flex items-center gap-7"
+        className="flex items-center gap-2 sm:gap-7"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ delay: 0.3 }}
@@ -56,27 +56,21 @@ export default function EntryStrip({ isLight }: EntryStripProps) {
           { v: '5M+',  l: 'Customers' },
           { v: '10+',  l: 'Countries' },
         ].map(({ v, l }, i) => (
-          <div key={l} className="flex items-center gap-2">
+          <div key={l} className="flex items-center gap-1 sm:gap-2">
             <span
-              className="font-black"
-              style={{
-                fontSize: '1.5rem',
-                color: isLight ? '#15803D' : '#4ADE80',
-              }}
+              className="font-black text-sm sm:text-2xl"
+              style={{ color: isLight ? '#15803D' : '#4ADE80' }}
             >
               {v}
             </span>
             <span
-              className="font-semibold"
-              style={{
-                fontSize: '1.25rem',
-                color: isLight ? '#374151' : '#9CA3AF',
-              }}
+              className="font-semibold text-xs sm:text-xl hidden xs:inline sm:inline"
+              style={{ color: isLight ? '#374151' : '#9CA3AF' }}
             >
               {l}
             </span>
             {i < 2 && (
-              <span className="font-bold" style={{ color: isLight ? '#9CA3AF' : '#374151', marginLeft: 4 }}>·</span>
+              <span className="font-bold text-xs sm:text-base" style={{ color: isLight ? '#9CA3AF' : '#374151', marginLeft: 2 }}>·</span>
             )}
           </div>
         ))}

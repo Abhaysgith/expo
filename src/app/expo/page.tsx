@@ -189,7 +189,7 @@ function SLabel({ children, light = false }: { children: React.ReactNode; light?
       <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
         style={{ background: 'rgba(22,163,74,0.10)', border: '1px solid rgba(22,163,74,0.28)' }}>
         <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#16A34A' }} />
-        <span className="text-xl font-bold uppercase tracking-[0.18em]" style={{ color: '#15803D' }}>{children}</span>
+        <span className="text-xs sm:text-xl font-bold uppercase tracking-[0.18em]" style={{ color: '#15803D' }}>{children}</span>
       </div>
     );
   }
@@ -197,7 +197,7 @@ function SLabel({ children, light = false }: { children: React.ReactNode; light?
     <div className="inline-flex items-center gap-2 px-3 py-1.5 rounded-full mb-4"
       style={{ background: 'rgba(22,163,74,0.07)', border: '1px solid rgba(22,163,74,0.22)', boxShadow: '0 0 12px rgba(22,163,74,0.06)' }}>
       <span className="w-1.5 h-1.5 rounded-full" style={{ background: '#22C55E', boxShadow: '0 0 5px rgba(34,197,94,0.7)' }} />
-      <span className="text-xl font-bold uppercase tracking-[0.18em]" style={{ color: '#22C55E' }}>{children}</span>
+      <span className="text-xs sm:text-xl font-bold uppercase tracking-[0.18em]" style={{ color: '#22C55E' }}>{children}</span>
     </div>
   );
 }
@@ -238,7 +238,7 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
         className="mb-2 relative z-10"
       >
         <h1 className="font-black leading-tight tracking-tight text-slate-800"
-          style={{ fontSize: 'clamp(3.5rem, 6vw, 5.5rem)' }}>
+          style={{ fontSize: 'clamp(1.8rem, 7vw, 5.5rem)' }}>
           Global Leaders in{' '}
           <span style={{
             background: 'linear-gradient(120deg, #15803D, #16A34A, #22C55E)',
@@ -455,10 +455,10 @@ function SlideProcess() {
           Precision-Tracked
         </span>
       </h2>
-      <p className="text-xl font-mono mb-5" style={{ color: '#9CA3AF' }}>Order ID: <span style={{ color: '#22C55E' }}>{orderId}</span></p>
+      <p className="text-sm sm:text-xl font-mono mb-3 sm:mb-5" style={{ color: '#9CA3AF' }}>Order ID: <span style={{ color: '#22C55E' }}>{orderId}</span></p>
 
       {/* Steps timeline */}
-      <div className="flex items-center w-full max-w-3xl mb-5 gap-2">
+      <div className="flex items-center w-full max-w-3xl mb-4 gap-1 overflow-x-auto pb-1 scrollbar-hide">
         {PROCESS_STEPS.map((step, i) => {
           const isDone    = i < active;
           const isCurrent = i === active;
@@ -466,7 +466,7 @@ function SlideProcess() {
             <div key={step.label} className="flex items-center gap-2 flex-1 min-w-0">
               <div className="flex-shrink-0 flex flex-col items-center gap-1.5">
                 <motion.div
-                  className="w-12 h-12 rounded-2xl flex items-center justify-center relative"
+                  className="w-8 h-8 sm:w-12 sm:h-12 rounded-xl sm:rounded-2xl flex items-center justify-center relative"
                   style={{
                     background: isCurrent ? `${step.color}18` : isDone ? 'rgba(16,185,129,0.1)' : 'rgba(20,30,55,0.5)',
                     border: `1.5px solid ${isCurrent ? step.color : isDone ? '#10B981' : 'rgba(71,85,105,0.3)'}`,
@@ -476,8 +476,8 @@ function SlideProcess() {
                   transition={{ duration: 1.2, repeat: isCurrent ? Infinity : 0 }}
                 >
                   {isDone
-                    ? <CheckCircle2 className="w-5 h-5" style={{ color: '#10B981' }} />
-                    : <step.icon className="w-5 h-5" style={{ color: isCurrent ? step.color : '#475569' }} />
+                    ? <CheckCircle2 className="w-3 h-3 sm:w-5 sm:h-5" style={{ color: '#10B981' }} />
+                    : <step.icon className="w-3 h-3 sm:w-5 sm:h-5" style={{ color: isCurrent ? step.color : '#475569' }} />
                   }
                   {isCurrent && (
                     <motion.div className="absolute inset-0 rounded-2xl"
@@ -531,8 +531,8 @@ function SlideProcess() {
           >
             <s.icon className="w-10 h-10" style={{ color: s.color }} />
           </motion.div>
-          <p className="text-4xl font-black" style={{ color: s.color }}>{s.title}</p>
-          <p className="text-xl mt-2 font-mono" style={{ color: '#9CA3AF' }}>{s.detail}</p>
+          <p className="text-xl sm:text-4xl font-black" style={{ color: s.color }}>{s.title}</p>
+          <p className="text-sm sm:text-xl mt-2 font-mono" style={{ color: '#9CA3AF' }}>{s.detail}</p>
 
           {/* Progress bar */}
           <div className="mt-5 h-1.5 rounded-full overflow-hidden" style={{ background: 'rgba(71,85,105,0.4)' }}>
@@ -554,8 +554,8 @@ function SlideProcess() {
         ].map(({ v, l, c }) => (
           <div key={l} className="px-4 py-2 rounded-xl flex items-center gap-2"
             style={{ background: `${c}0A`, border: `1px solid ${c}25` }}>
-            <span className="font-black text-2xl" style={{ color: c }}>{v}</span>
-            <span className="text-xl font-semibold" style={{ color: '#9CA3AF' }}>{l}</span>
+            <span className="font-black text-base sm:text-2xl" style={{ color: c }}>{v}</span>
+            <span className="text-xs sm:text-xl font-semibold" style={{ color: '#9CA3AF' }}>{l}</span>
           </div>
         ))}
       </div>
@@ -571,7 +571,7 @@ function SlideMap() {
     <div className="flex flex-col h-full px-4 py-4">
       <div className="text-center mb-4 flex-shrink-0">
         <SLabel>Global Presence</SLabel>
-        <h2 className="font-black text-slate-50" style={{ fontSize: 'clamp(3rem, 5vw, 4.5rem)' }}>
+        <h2 className="font-black text-slate-50" style={{ fontSize: 'clamp(1.4rem, 5vw, 4.5rem)' }}>
           UClean Worldwide —{' '}
           <span style={{ background: 'linear-gradient(135deg, #22C55E, #10B981)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
             10+ Countries
@@ -704,8 +704,8 @@ export default function ExpoPage() {
       <EntryStrip isLight={isLightSlide} />
 
 
-      {/* Main slide area — offset by EntryStrip (80px) + bottom nav (80px) */}
-      <div className="relative z-10 w-full overflow-hidden" style={{ height: 'calc(100vh - 80px - 80px)', marginTop: 80 }}>
+      {/* Main slide area — offset by EntryStrip + bottom nav */}
+      <div className="relative z-10 w-full overflow-hidden mt-14 sm:mt-20 h-[calc(100vh-120px)] sm:h-[calc(100vh-160px)]">
         <AnimatePresence mode="wait">
           <motion.div
             key={currentSlide}
