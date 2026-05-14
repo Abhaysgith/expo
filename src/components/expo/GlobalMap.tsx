@@ -99,11 +99,11 @@ export default function GlobalMap({ autoHighlight = true }: Props) {
       </div>
 
       {/* Map + Sidebar */}
-      <div className="flex-1 flex flex-col lg:flex-row gap-4 min-h-0">
+      <div className="flex-1 flex flex-col lg:flex-row gap-2 lg:gap-4 min-h-0">
         {/* Map */}
         <div
           className="flex-1 relative rounded-xl overflow-hidden"
-          style={{ background: 'rgba(8,13,28,0.8)', border: '1px solid rgba(6,182,212,0.1)', minHeight: 200 }}
+          style={{ background: 'rgba(8,13,28,0.8)', border: '1px solid rgba(6,182,212,0.1)', minHeight: 160 }}
         >
           <div className="absolute inset-0 grid-dots opacity-30 pointer-events-none" />
 
@@ -193,8 +193,8 @@ export default function GlobalMap({ autoHighlight = true }: Props) {
           </ComposableMap>
         </div>
 
-        {/* Country detail card */}
-        <div className="w-full lg:w-44 flex-shrink-0">
+        {/* Country detail card — desktop only */}
+        <div className="hidden lg:block w-44 flex-shrink-0">
           <AnimatePresence mode="wait">
             {activeCountry && (
               <motion.div
@@ -210,25 +210,20 @@ export default function GlobalMap({ autoHighlight = true }: Props) {
                   boxShadow: `0 0 20px ${activeCountry.color}10`,
                 }}
               >
-                {/* Top shimmer */}
                 <div className="h-px mb-4" style={{ background: `linear-gradient(90deg, transparent, ${activeCountry.color}60, transparent)` }} />
-
                 <div className="text-center mb-4">
                   <div className="text-4xl mb-2">{activeCountry.flag}</div>
                   <p className="font-black text-sm" style={{ color: activeCountry.color }}>{activeCountry.name}</p>
-                  <span
-                    className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
-                    style={{ background: `${activeCountry.color}15`, color: activeCountry.color }}
-                  >
+                  <span className="text-[9px] font-bold uppercase tracking-widest px-2 py-0.5 rounded-full"
+                    style={{ background: `${activeCountry.color}15`, color: activeCountry.color }}>
                     {activeCountry.status}
                   </span>
                 </div>
-
                 <div className="space-y-3">
                   {[
-                    { icon: Store, label: 'Stores',   value: activeCountry.stores },
-                    { icon: Globe, label: 'Cities',   value: activeCountry.cities },
-                    { icon: Users, label: 'Since',    value: activeCountry.launchYear },
+                    { icon: Store, label: 'Stores', value: activeCountry.stores },
+                    { icon: Globe, label: 'Cities', value: activeCountry.cities },
+                    { icon: Users, label: 'Since',  value: activeCountry.launchYear },
                   ].map(({ icon: Icon, label, value }) => (
                     <div key={label} className="flex items-center justify-between">
                       <div className="flex items-center gap-1.5">
@@ -239,21 +234,17 @@ export default function GlobalMap({ autoHighlight = true }: Props) {
                     </div>
                   ))}
                 </div>
-
-                {/* Progress bar */}
                 <div className="mt-4">
                   <div className="flex justify-between text-[9px] text-slate-600 font-mono mb-1">
                     <span>Network share</span>
                     <span>{Math.round((activeCountry.stores / 900) * 100)}%</span>
                   </div>
                   <div className="h-1 rounded-full overflow-hidden" style={{ background: 'rgba(71,85,105,0.4)' }}>
-                    <motion.div
-                      className="h-full rounded-full"
+                    <motion.div className="h-full rounded-full"
                       style={{ background: activeCountry.color, boxShadow: `0 0 8px ${activeCountry.color}` }}
                       initial={{ width: '0%' }}
                       animate={{ width: `${Math.max(1, (activeCountry.stores / 900) * 100)}%` }}
-                      transition={{ duration: 0.6 }}
-                    />
+                      transition={{ duration: 0.6 }} />
                   </div>
                 </div>
               </motion.div>
@@ -262,22 +253,59 @@ export default function GlobalMap({ autoHighlight = true }: Props) {
         </div>
       </div>
 
-      {/* Country grid (mobile) */}
-      <div className="lg:hidden mt-3 flex flex-wrap gap-2">
-        {UCLEAN_COUNTRIES.map(c => (
-          <button
-            key={c.code}
-            onClick={() => setActiveCountry(c)}
-            className="text-sm px-2 py-1 rounded-lg"
-            style={{
-              background: activeCountry?.code === c.code ? `${c.color}18` : 'rgba(30,41,59,0.4)',
-              border: `1px solid ${activeCountry?.code === c.code ? c.color + '50' : 'rgba(71,85,105,0.3)'}`,
-              color: activeCountry?.code === c.code ? c.color : '#64748B',
-            }}
-          >
-            {c.flag} {c.name}
-          </button>
-        ))}
+      {/* Mobile: compact info bar + flag scroll */}
+      <div className="lg:hidden flex-shrink-0 mt-2 space-y-2">
+        {/* Active country compact strip */}
+        <AnimatePresence mode="wait">
+          {activeCountry && (
+            <motion.div
+              key={activeCountry.code}
+              initial={{ opacity: 0, y: 6 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 0.2 }}
+              className="flex items-center justify-between px-3 py-2 rounded-xl"
+              style={{ background: `rgba(10,15,30,0.9)`, border: `1px solid ${activeCountry.color}30` }}
+            >
+              <div className="flex items-center gap-2">
+                <span className="text-xl">{activeCountry.flag}</span>
+                <div>
+                  <p className="text-xs font-black leading-tight" style={{ color: activeCountry.color }}>{activeCountry.name}</p>
+                  <p className="text-[9px] text-slate-500 font-mono uppercase">{activeCountry.status}</p>
+                </div>
+              </div>
+              <div className="flex items-center gap-3">
+                {[
+                  { l: 'Stores', v: activeCountry.stores },
+                  { l: 'Cities', v: activeCountry.cities },
+                  { l: 'Since',  v: activeCountry.launchYear },
+                ].map(({ l, v }) => (
+                  <div key={l} className="text-center">
+                    <p className="text-xs font-black leading-tight" style={{ color: activeCountry.color }}>{v}</p>
+                    <p className="text-[8px] text-slate-600 font-mono uppercase">{l}</p>
+                  </div>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+
+        {/* Flag-only horizontal scroll */}
+        <div className="flex gap-1.5 overflow-x-auto pb-1 scrollbar-hide">
+          {UCLEAN_COUNTRIES.map(c => (
+            <button
+              key={c.code}
+              onClick={() => setActiveCountry(c)}
+              className="flex-shrink-0 px-2 py-1 rounded-lg text-base transition-all"
+              style={{
+                background: activeCountry?.code === c.code ? `${c.color}20` : 'rgba(30,41,59,0.4)',
+                border: `1px solid ${activeCountry?.code === c.code ? c.color + '60' : 'rgba(71,85,105,0.3)'}`,
+              }}
+            >
+              {c.flag}
+            </button>
+          ))}
+        </div>
       </div>
     </div>
   );
