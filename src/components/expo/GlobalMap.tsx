@@ -23,7 +23,7 @@ interface Country {
 
 // UClean operating countries with approximate marker coordinates
 const UCLEAN_COUNTRIES: Country[] = [
-  { code:'IND', numericCode:'356', name:'India',      flag:'🇮🇳', stores:870, cities:200, lat:20.59,  lng:78.96,  status:'flagship',  launchYear:2016, color:'#22C55E' },
+  { code:'IND', numericCode:'356', name:'India',      flag:'🇮🇳', stores:870, cities:250, lat:20.59,  lng:78.96,  status:'flagship',  launchYear:2016, color:'#22C55E' },
   { code:'MNG', numericCode:'496', name:'Mongolia',   flag:'🇲🇳', stores:2,   cities:2,   lat:47.92,  lng:106.92, status:'active',    launchYear:2025, color:'#F472B6' },
   { code:'LKA', numericCode:'144', name:'Sri Lanka',  flag:'🇱🇰', stores:10,  cities:5,   lat:7.87,   lng:80.77,  status:'active',    launchYear:2025, color:'#2DD4BF' },
   { code:'BGD', numericCode:'050', name:'Bangladesh', flag:'🇧🇩', stores:2,   cities:2,   lat:23.69,  lng:90.36,  status:'active',    launchYear:2025, color:'#F59E0B' },
