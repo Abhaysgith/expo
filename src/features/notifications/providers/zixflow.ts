@@ -144,7 +144,8 @@ export async function sendSalesLeadAlertWhatsApp(
 
 /**
  * Notify the SALES PERSON that a customer clicked "Call Me" CTA.
- * Uses same order_confirm template for now — swap to a dedicated template later.
+ * Template: lead_sales_callback
+ * {{1}} = customerName, {{2}} = customerPhone
  */
 export async function sendCallRequestAlertWhatsApp(
   salesPhone: string,
@@ -153,8 +154,8 @@ export async function sendCallRequestAlertWhatsApp(
 ) {
   return send(
     salesPhone,
-    'order_confirm',
-    { body_1: customerName, button_1: customerPhone },
+    'lead_sales_callback',
+    { body_1: customerName, body_2: customerPhone },
     TRANS_KEY,
   );
 }
