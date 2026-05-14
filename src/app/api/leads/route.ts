@@ -23,6 +23,9 @@ export async function GET() {
   return ok({ leads });
 }
 
+// Fallback owner when no sales person is logged in
+const DEFAULT_OWNER = { name: 'Abhay', phone: '9304236395' };
+
 export async function POST(req: NextRequest) {
   // Auth is optional — if a sales person is logged in, attach them
   const session = await getSession();
@@ -59,50 +62,44 @@ export async function POST(req: NextRequest) {
     city,
     note || null,
     budget || null,
-    isLoggedInSales ? session.userId : null,
-    isLoggedInSales ? session.name   : null,
-    isLoggedInSales ? session.phone  : null,
+    isLoggedInSales ? session.userId      : null,
+    isLoggedInSales ? session.name        : DEFAULT_OWNER.name,
+    isLoggedInSales ? session.phone       : DEFAULT_OWNER.phone,
     brochureUrl || null,
     now,
     now
   );
 
-  // Send WhatsApp + log the job (only when a sales person submitted)
-  if (isLoggedInSales) {
-    const jobId = uuidv4();
-    const jobPayload = JSON.stringify({ customerName, customerPhone, city, salesName: session.name });
+  // Always send WhatsApp — use session if logged in, fallback to DEFAULT_OWNER
+  const expoDate   = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+  const salesName  = isLoggedInSales ? (session.name  ?? DEFAULT_OWNER.name)  : DEFAULT_OWNER.name;
+  const salesPhone = isLoggedInSales ? (session.phone ?? DEFAULT_OWNER.phone) : DEFAULT_OWNER.phone;
 
-    // Insert job as queued
-    db.prepare(
-      `INSERT INTO notification_jobs (id, lead_id, provider, payload, created_at, updated_at)
-       VALUES (?, ?, 'whatsapp', ?, ?, ?)`
-    ).run(jobId, id, jobPayload, now, now);
+  const jobId = uuidv4();
+  db.prepare(
+    `INSERT INTO notification_jobs (id, lead_id, provider, payload, created_at, updated_at)
+     VALUES (?, ?, 'whatsapp', ?, ?, ?)`
+  ).run(jobId, id, JSON.stringify({ customerName, customerPhone, city, salesName }), now, now);
 
-    // Fire WhatsApp to customer (non-blocking)
-    const expoDate = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-    const salesName  = session.name  ?? 'UClean Team';
-    const salesPhone = session.phone ?? '';
-    sendFranchiseLeadWhatsApp(customerPhone, customerName, expoDate, salesName, salesPhone)
-      .then(result => {
-        const status    = result.success ? 'sent' : 'failed';
-        const updateNow = new Date().toISOString();
-        db.prepare(
-          `UPDATE notification_jobs SET status=?, attempts=1, last_error=?, updated_at=? WHERE id=?`
-        ).run(status, result.success ? null : JSON.stringify(result.response), updateNow, jobId);
-        db.prepare(
-          `UPDATE leads SET whatsapp_status=?, updated_at=? WHERE id=?`
-        ).run(status, updateNow, id);
-        console.log(`[WA customer] lead=${id} status=${status}`);
-      })
-      .catch(e => console.error('[WA customer] unexpected error:', e));
+  // Fire WhatsApp to customer (non-blocking)
+  sendFranchiseLeadWhatsApp(customerPhone, customerName, expoDate, salesName, salesPhone)
+    .then(result => {
+      const status    = result.success ? 'sent' : 'failed';
+      const updateNow = new Date().toISOString();
+      db.prepare(
+        `UPDATE notification_jobs SET status=?, attempts=1, last_error=?, updated_at=? WHERE id=?`
+      ).run(status, result.success ? null : JSON.stringify(result.response), updateNow, jobId);
+      db.prepare(
+        `UPDATE leads SET whatsapp_status=?, updated_at=? WHERE id=?`
+      ).run(status, updateNow, id);
+      console.log(`[WA customer] lead=${id} status=${status}`);
+    })
+    .catch(e => console.error('[WA customer] unexpected error:', e));
 
-    // Fire WhatsApp alert to sales person (non-blocking)
-    if (session.phone) {
-      sendSalesLeadAlertWhatsApp(session.phone, salesName, customerName, customerPhone, city)
-        .then(result => console.log(`[WA sales] lead=${id} success=${result.success}`))
-        .catch(e => console.error('[WA sales] unexpected error:', e));
-    }
-  }
+  // Fire WhatsApp alert to sales person (non-blocking)
+  sendSalesLeadAlertWhatsApp(salesPhone, salesName, customerName, customerPhone, city)
+    .then(result => console.log(`[WA sales] lead=${id} success=${result.success}`))
+    .catch(e => console.error('[WA sales] unexpected error:', e));
 
   const lead = db.prepare('SELECT * FROM leads WHERE id = ?').get(id);
   return ok({ lead }, 'Lead created');
