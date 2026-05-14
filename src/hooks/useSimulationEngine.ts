@@ -39,9 +39,9 @@ interface DayConfig {
 }
 
 const DAILY_CONFIG: Record<string, DayConfig> = {
-  '2026-05-14': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '21:30' },
-  '2026-05-15': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '21:30' },
-  '2026-05-16': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '21:30' },
+  '2026-05-14': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '18:30' },
+  '2026-05-15': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '18:30' },
+  '2026-05-16': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '18:30' },
   '2026-05-17': { startOrders: 515,   endOrders: 18_600,  startGSV: 260_075,  endGSV: 9_660_000, startTime: '09:30', endTime: '18:30' },
 };
 
