@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Smartphone, Download } from 'lucide-react';
+import { Smartphone, Download } from 'lucide-react';
 import { motion } from 'framer-motion';
 import Logo from '@/components/ui/Logo';
 import { useOfflineStatus } from '@/hooks/useOfflineStatus';
@@ -24,7 +24,6 @@ export default function NavBar() {
   };
 
   const navLinks = [
-    { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
     { href: '/franchise', label: 'Franchise', icon: Smartphone },
   ];
 

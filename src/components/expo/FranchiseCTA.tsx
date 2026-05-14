@@ -1,13 +1,13 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
-import { 
-  User, Mail, Phone, MapPin, IndianRupee, MessageSquare, 
-  Send, CheckCircle2, ArrowRight, Loader2, Sparkles, ChevronDown
+import {
+  User, Mail, Phone, MapPin, IndianRupee, MessageSquare,
+  Send, CheckCircle2, ArrowRight, Loader2, ChevronDown, WifiOff, Download
 } from 'lucide-react';
-import { generateLeadId } from '@/lib/exportLeads';
-import type { Lead } from '@/lib/exportLeads';
+import { saveLeadOffline, getPendingLeads } from '@/features/offline-sync/indexeddb';
+import { v4 as uuidv4 } from 'uuid';
 
 const BUDGET_OPTIONS = [
   { value: "22L - 24L", label: "₹22 Lakhs - ₹24 Lakhs" },
@@ -16,6 +16,8 @@ const BUDGET_OPTIONS = [
 ];
 
 export default function FranchiseCTA() {
+  const [salesUser, setSalesUser] = useState<{ name: string; phone: string } | null>(null);
+  const [downloading, setDownloading] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
@@ -26,50 +28,134 @@ export default function FranchiseCTA() {
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
+  const [savedOffline, setSavedOffline] = useState(false);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+  const [submitError, setSubmitError] = useState('');
+
+  // Check if a sales person is logged in
+  useEffect(() => {
+    fetch('/api/auth/session')
+      .then(r => r.json())
+      .then(data => {
+        if (data?.data?.user?.role === 'sales') {
+          setSalesUser({ name: data.data.user.name, phone: data.data.user.phone });
+        }
+      })
+      .catch(() => {});
+  }, []);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
+    setSubmitError('');
 
-    // Simulate API call
-    await new Promise(resolve => setTimeout(resolve, 1500));
-
-    const newLead: Lead = {
-      id: generateLeadId(),
-      name: formData.name,
-      email: formData.email,
-      phone: formData.phone,
+    const payload = {
+      customerName: formData.name,
+      customerEmail: formData.email,
+      customerPhone: formData.phone,
       city: formData.city,
-      investmentBudget: formData.investmentBudget,
-      message: formData.message,
-      submittedAt: new Date().toISOString(),
-      source: 'nfc',
-      syncStatus: 'pending',
-      cityTier: 'unknown'
+      budget: formData.investmentBudget,
+      note: formData.message,
     };
 
     try {
-      const existingLeads: Lead[] = JSON.parse(localStorage.getItem('uclean-leads') || '[]');
-      localStorage.setItem('uclean-leads', JSON.stringify([newLead, ...existingLeads]));
-    } catch (error) {
-      console.error('Error saving lead:', error);
-    }
+      const res = await fetch('/api/leads', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+      });
 
-    setIsSubmitting(false);
-    setSubmitted(true);
+      if (!res.ok) {
+        const data = await res.json().catch(() => ({}));
+        setSubmitError(data.error || 'Failed to save. Please try again.');
+        setIsSubmitting(false);
+        return;
+      }
+
+      setSubmitted(true);
+    } catch (err) {
+      // Only save offline for true network failures (TypeError = fetch failed)
+      if (err instanceof TypeError) {
+        await saveLeadOffline({
+          id: uuidv4(),
+          customerName: formData.name,
+          customerEmail: formData.email || undefined,
+          customerPhone: formData.phone,
+          city: formData.city,
+          budget: formData.investmentBudget || undefined,
+          note: formData.message || undefined,
+          ownerName: salesUser?.name,
+          ownerPhone: salesUser?.phone,
+          syncStatus: 'pending',
+          createdAt: new Date().toISOString(),
+        });
+        setSavedOffline(true);
+        setSubmitted(true);
+      } else {
+        setSubmitError('Something went wrong. Please try again.');
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const handleReset = () => {
-    setFormData({
-      name: '',
-      email: '',
-      phone: '',
-      city: '',
-      investmentBudget: '',
-      message: ''
-    });
+    setFormData({ name: '', email: '', phone: '', city: '', investmentBudget: '', message: '' });
     setSubmitted(false);
+    setSavedOffline(false);
+  };
+
+  const handleDownload = async () => {
+    setDownloading(true);
+    try {
+      // Fetch server leads (may fail if offline)
+      type ServerLead = Record<string, string | null>;
+      let serverLeads: ServerLead[] = [];
+      try {
+        const res = await fetch('/api/leads/my');
+        if (res.ok) {
+          const { data } = await res.json();
+          serverLeads = data?.leads ?? [];
+        }
+      } catch { /* offline — skip server fetch */ }
+
+      // Always fetch offline pending leads from IndexedDB
+      const offlineLeads = await getPendingLeads();
+      // Filter to only this sales person's offline leads
+      const myOffline = offlineLeads.filter(
+        l => !salesUser || l.ownerName === salesUser.name
+      );
+
+      // Build unified rows — server leads first, then pending offline
+      const serverRows = serverLeads.map((l: ServerLead) => [
+        l.customer_name ?? '', l.customer_phone ?? '', l.customer_email ?? '',
+        l.city ?? '', l.budget ?? '', (l.note ?? '').replace(/,/g, ';'),
+        l.status ?? '', l.whatsapp_status ?? '',
+        new Date(l.created_at as string).toLocaleString('en-IN'),
+        'Synced',
+      ]);
+      const offlineRows = myOffline.map(l => [
+        l.customerName, l.customerPhone, l.customerEmail ?? '',
+        l.city, l.budget ?? '', (l.note ?? '').replace(/,/g, ';'),
+        'new', '—',
+        new Date(l.createdAt).toLocaleString('en-IN'),
+        'Pending (offline)',
+      ]);
+
+      const allRows = [...serverRows, ...offlineRows];
+      if (allRows.length === 0) { alert('No leads yet.'); setDownloading(false); return; }
+
+      const headers = ['Name', 'Phone', 'Email', 'City', 'Budget', 'Note', 'Status', 'WhatsApp', 'Created At', 'Sync'];
+      const csv = [headers, ...allRows].map(r => r.map(v => `"${v}"`).join(',')).join('\n');
+      const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `my-leads-${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+      URL.revokeObjectURL(url);
+    } catch { /* silent */ }
+    setDownloading(false);
   };
 
   if (submitted) {
@@ -79,12 +165,20 @@ export default function FranchiseCTA() {
         animate={{ opacity: 1, scale: 1 }}
         className="h-full flex flex-col items-center justify-center text-center px-6"
       >
-        <div className="w-24 h-24 bg-green-500/10 rounded-full flex items-center justify-center mb-6">
-          <CheckCircle2 className="w-12 h-12 text-green-500" />
+        <div className={`w-24 h-24 rounded-full flex items-center justify-center mb-6 ${savedOffline ? 'bg-amber-500/10' : 'bg-green-500/10'}`}>
+          {savedOffline
+            ? <WifiOff className="w-12 h-12 text-amber-500" />
+            : <CheckCircle2 className="w-12 h-12 text-green-500" />
+          }
         </div>
-        <h2 className="text-4xl font-black text-slate-800 mb-4">Lead Captured!</h2>
+        <h2 className="text-4xl font-black text-slate-800 mb-4">
+          {savedOffline ? 'Saved Offline!' : 'Lead Captured!'}
+        </h2>
         <p className="text-slate-600 text-xl max-w-md mb-8">
-          Prospect details have been saved securely to the dashboard. Ready for the next one.
+          {savedOffline
+            ? 'No network detected. Lead saved locally and will sync automatically when back online.'
+            : 'Prospect details saved securely. Ready for the next one.'
+          }
         </p>
         <button
           onClick={handleReset}
@@ -99,9 +193,28 @@ export default function FranchiseCTA() {
 
   return (
     <div className="flex flex-col items-center justify-start sm:justify-center w-full max-w-xl mx-auto pb-8">
-      {/* Form Container */}
       <div className="w-full">
         <div className="text-center mb-6">
+          {salesUser && (
+            <div className="flex items-center justify-center gap-2 mb-2">
+              <p className="text-xs font-semibold text-green-600 tracking-wide">
+                👤 {salesUser.name}
+              </p>
+              <button
+                type="button"
+                onClick={handleDownload}
+                disabled={downloading}
+                title="Download my leads"
+                className="w-6 h-6 rounded-full flex items-center justify-center transition-all hover:bg-green-100 disabled:opacity-50"
+                style={{ color: '#16A34A' }}
+              >
+                {downloading
+                  ? <Loader2 className="w-3 h-3 animate-spin" />
+                  : <Download className="w-3 h-3" />
+                }
+              </button>
+            </div>
+          )}
           <h2 className="text-2xl sm:text-3xl font-black text-slate-800 leading-tight">
             Capture <span className="text-green-600">Lead</span>
           </h2>
@@ -134,7 +247,6 @@ export default function FranchiseCTA() {
               </label>
               <input
                 type="email"
-                required
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
                 className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all"
@@ -188,7 +300,6 @@ export default function FranchiseCTA() {
                 {formData.investmentBudget ? BUDGET_OPTIONS.find(o => o.value === formData.investmentBudget)?.label : 'Select Range'}
                 <ChevronDown className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-green-500' : 'text-slate-400'}`} />
               </button>
-
               <AnimatePresence>
                 {isDropdownOpen && (
                   <motion.div
@@ -234,6 +345,12 @@ export default function FranchiseCTA() {
               placeholder="Any specific questions?"
             />
           </div>
+
+          {submitError && (
+            <div className="text-red-500 text-xs text-center bg-red-50 border border-red-200 rounded-xl px-3 py-2">
+              {submitError}
+            </div>
+          )}
 
           <button
             type="submit"

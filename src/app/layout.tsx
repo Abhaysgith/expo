@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   description: 'World\'s most advanced laundry franchise. Real-time analytics, zero software fees, proven ROI.',
   manifest: '/manifest.json',
   appleWebApp: { capable: true, statusBarStyle: 'black-translucent', title: 'UClean' },
-  icons: { icon: '/icons/icon-192.png', apple: '/icons/icon-192.png' },
+  icons: { icon: '/fevicon.png', apple: '/fevicon.png' },
 };
 
 export const viewport: Viewport = {
@@ -31,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <meta name="mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-        <link rel="apple-touch-icon" href="/icons/icon-192.png" />
+        <link rel="apple-touch-icon" href="/fevicon.png" />
       </head>
       <body className="bg-slate-950 text-slate-300 min-h-screen antialiased">
         {children}
