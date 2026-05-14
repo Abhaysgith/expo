@@ -12,7 +12,7 @@ export interface LiveEvent {
 
 export interface SimMetrics {
   ordersToday: number;
-  revenueToday: number;       // in rupees
+  revenueToday: number;       // GSV in rupees
   activeStores: number;
   customersServed: number;
   processingNow: number;
@@ -26,15 +26,47 @@ export interface SimState {
   tick: number;
 }
 
-// ── Seed values based on real UClean scale ────────────────
-const SEED: SimMetrics = {
-  ordersToday:      1_247,
-  revenueToday:     4_836_000,  // ~₹48L/day across network
-  activeStores:     823,
-  customersServed:  3_000_000,
-  processingNow:    184,
-  countriesOnline:  10,
-};
+// ── Time-based progression constants ──────────────────────
+// Business day: 9:30 AM → 9:30 PM (12 hours)
+const DAY_START_MIN = 9 * 60 + 30;   // 570 minutes from midnight
+const DAY_END_MIN   = 21 * 60 + 30;  // 1290 minutes from midnight
+const DAY_TOTAL_MIN = DAY_END_MIN - DAY_START_MIN; // 720 min
+
+const START_ORDERS     = 440;
+const END_ORDERS       = 16_800;
+const START_GSV        = 215_600;
+const END_GSV          = 8_736_000;
+const START_PROCESSING = 50;
+const END_PROCESSING   = 1_850;
+const START_STORES     = 895;
+const END_STORES       = 910;
+
+/** Returns 0.0 → 1.0 based on current time within business hours */
+function getDayProgress(): number {
+  const now = new Date();
+  const currentMin = now.getHours() * 60 + now.getMinutes() + now.getSeconds() / 60;
+  return Math.max(0, Math.min(1, (currentMin - DAY_START_MIN) / DAY_TOTAL_MIN));
+}
+
+function lerp(start: number, end: number, t: number) {
+  return Math.round(start + (end - start) * t);
+}
+
+function buildSeed(): SimMetrics {
+  const t = getDayProgress();
+  return {
+    ordersToday:     lerp(START_ORDERS,     END_ORDERS,     t),
+    revenueToday:    lerp(START_GSV,        END_GSV,        t),
+    activeStores:    lerp(START_STORES,     END_STORES,     t),
+    customersServed: 5_000_000,
+    processingNow:   lerp(START_PROCESSING, END_PROCESSING, t),
+    countriesOnline: 10,
+  };
+}
+
+// ── Order rate: ~16,360 orders over 720 min = ~22.7/min = ~3.8 per 10s ──────
+// Per tick (avg 10s): 3-5 orders, avg order GSV ≈ ₹521
+const AVG_ORDER_GSV = Math.round((END_GSV - START_GSV) / (END_ORDERS - START_ORDERS)); // ~521
 
 const CITIES = [
   'Gurgaon', 'Delhi', 'Mumbai', 'Bengaluru', 'Hyderabad', 'Chennai',
@@ -65,7 +97,6 @@ function generateEvent(): LiveEvent {
   return { id: uid(), text: tmpl.gen(), color: tmpl.color, type: tmpl.type, ts: Date.now() };
 }
 
-// ── Seed initial event list ───────────────────────────────
 function seedEvents(count = 12): LiveEvent[] {
   return Array.from({ length: count }, (_, i) => ({
     ...generateEvent(),
@@ -76,34 +107,40 @@ function seedEvents(count = 12): LiveEvent[] {
 
 // ─────────────────────────────────────────────────────────
 export function useSimulationEngine() {
-  const [metrics, setMetrics] = useState<SimMetrics>(SEED);
+  const [metrics, setMetrics] = useState<SimMetrics>(buildSeed);
   const [liveEvents, setLiveEvents] = useState<LiveEvent[]>(seedEvents);
   const [latestEvent, setLatestEvent] = useState<LiveEvent | null>(null);
   const [tick, setTick] = useState(0);
 
-  const ordersRef = useRef(SEED.ordersToday);
-  const revenueRef = useRef(SEED.revenueToday);
-  const processingRef = useRef(SEED.processingNow);
+  const ordersRef     = useRef(metrics.ordersToday);
+  const revenueRef    = useRef(metrics.revenueToday);
+  const processingRef = useRef(metrics.processingNow);
 
   // ── Order increment: every 6–14 seconds ─────────────────
   useEffect(() => {
     const schedule = () => {
       const delay = 6000 + Math.random() * 8000;
       const t = setTimeout(() => {
-        const newOrders = 1 + Math.floor(Math.random() * 3);
-        const avgOrderValue = 250 + Math.floor(Math.random() * 400);
-        ordersRef.current += newOrders;
-        revenueRef.current += newOrders * avgOrderValue;
-        processingRef.current = 150 + Math.floor(Math.random() * 80);
+        // 3–5 new orders per tick (≈10s avg → ~22/min → ~16K/day)
+        const newOrders = 3 + Math.floor(Math.random() * 3);
+        ordersRef.current  += newOrders;
+        revenueRef.current += newOrders * (AVG_ORDER_GSV + Math.floor(Math.random() * 200 - 100));
+
+        // Processing: ~11% of current orders ± small noise
+        processingRef.current = Math.round(ordersRef.current * 0.11 + Math.random() * 20 - 10);
+
+        // Stores: fluctuate between START_STORES and END_STORES based on time
+        const t2 = getDayProgress();
+        const stores = lerp(START_STORES, END_STORES, t2) + Math.floor(Math.random() * 4 - 2);
 
         setMetrics(prev => ({
           ...prev,
-          ordersToday:  ordersRef.current,
-          revenueToday: revenueRef.current,
-          processingNow: processingRef.current,
-          activeStores: 820 + Math.floor(Math.random() * 8),
+          ordersToday:   ordersRef.current,
+          revenueToday:  revenueRef.current,
+          processingNow: Math.max(1, processingRef.current),
+          activeStores:  stores,
         }));
-        setTick(t => t + 1);
+        setTick(n => n + 1);
         schedule();
       }, delay);
       return t;
@@ -128,11 +165,9 @@ export function useSimulationEngine() {
     return () => clearTimeout(t);
   }, []);
 
-  // ── Occasional "glow spike" — just a tick bump ───────────
+  // ── Tick bump every 15s ───────────────────────────────────
   useEffect(() => {
-    const t = setInterval(() => {
-      setTick(n => n + 1);
-    }, 15000);
+    const t = setInterval(() => setTick(n => n + 1), 15000);
     return () => clearInterval(t);
   }, []);
 

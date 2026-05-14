@@ -342,7 +342,7 @@ function SlideMetrics({ metrics, liveEvents, tick }: {
   const spiking = useAttentionSpike(12000, 1200);
   const BIG = [
     { label: 'Orders Today',     value: metrics.ordersToday,   suffix: '',    color: '#22C55E', size: 'text-4xl sm:text-6xl md:text-8xl' },
-    { label: 'Revenue Today',    value: null, raw: fmt(metrics.revenueToday), color: '#10B981', size: 'text-3xl sm:text-5xl md:text-7xl' },
+    { label: 'GSV Today',        value: null, raw: fmt(metrics.revenueToday), color: '#10B981', size: 'text-3xl sm:text-5xl md:text-7xl' },
     { label: 'Stores Active',    value: metrics.activeStores,  suffix: '+',   color: '#818CF8', size: 'text-4xl sm:text-6xl md:text-8xl' },
     { label: 'Processing Now',   value: metrics.processingNow, suffix: '',    color: '#F59E0B', size: 'text-3xl sm:text-5xl md:text-7xl' },
   ];
