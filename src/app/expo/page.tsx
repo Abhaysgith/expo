@@ -690,9 +690,21 @@ function PWAInstallBanner() {
       return;
     }
 
+    // Read prompt captured by global script before React loaded
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    if ((window as any).__pwaPrompt) {
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      deferredPrompt.current = (window as any).__pwaPrompt;
+      setShow(true);
+      return;
+    }
+
+    // Fallback: listen in case it fires after hydration
     const handler = (e: Event) => {
       e.preventDefault();
       deferredPrompt.current = e;
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      (window as any).__pwaPrompt = e;
       setShow(true);
     };
     window.addEventListener('beforeinstallprompt', handler);
