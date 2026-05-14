@@ -93,7 +93,7 @@ export async function sendOrderConfirmWhatsApp(
  * Template: expo_lead
  * {{1}} = customerName, {{2}} = date, {{3}} = salesPersonName, {{4}} = salesPersonName, {{5}} = salesPersonPhone
  */
-const BROCHURE_URL = process.env.BROCHURE_URL || '';
+const BROCHURE_URL = process.env.BROCHURE_URL || 'https://ucleanlaundry.up.railway.app/UClean%20Franchise%20Brochure%202026.pdf';
 
 export async function sendFranchiseLeadWhatsApp(
   mobile: string,
@@ -106,7 +106,7 @@ export async function sendFranchiseLeadWhatsApp(
     mobile,
     'expo_lead',
     {
-      header_1: BROCHURE_URL,
+      document: BROCHURE_URL,
       body_1: customerName,
       body_2: date,
       body_3: salesPersonName,
