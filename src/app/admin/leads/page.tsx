@@ -70,7 +70,7 @@ export default async function AdminLeadsPage() {
               <p className="text-xs font-black uppercase tracking-wider" style={{ color: '#6B7280' }}>Admin</p>
               <p className="text-sm font-black" style={{ color: '#111827' }}>{session.name}</p>
             </div>
-            <LogoutButton redirectTo="/admin-login" />
+            <LogoutButton redirectTo="/expo" />
           </div>
         </div>
       </header>
