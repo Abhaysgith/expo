@@ -84,7 +84,10 @@ export async function POST(req: NextRequest) {
   // Fire WhatsApp for each synced lead (non-blocking)
   for (const lead of parsed.data.leads) {
     // Notify customer
-    sendFranchiseLeadWhatsApp(lead.customerPhone, lead.customerName, lead.id)
+    const expoDate   = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+    const salesName  = session.name  ?? 'UClean Team';
+    const salesPhone = session.phone ?? '';
+    sendFranchiseLeadWhatsApp(lead.customerPhone, lead.customerName, expoDate, salesName, salesPhone)
       .then(result => {
         const status    = result.success ? 'sent' : 'failed';
         const updateNow = new Date().toISOString();
@@ -98,7 +101,7 @@ export async function POST(req: NextRequest) {
 
     // Notify sales person
     if (session.phone) {
-      sendSalesLeadAlertWhatsApp(session.phone, lead.customerName, lead.id)
+      sendSalesLeadAlertWhatsApp(session.phone, salesName, lead.customerName, lead.customerPhone, lead.city)
         .then(result => console.log(`[WA sync sales] lead=${lead.id} success=${result.success}`))
         .catch(e => console.error('[WA sync sales] unexpected error:', e));
     }

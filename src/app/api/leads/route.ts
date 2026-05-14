@@ -79,7 +79,10 @@ export async function POST(req: NextRequest) {
     ).run(jobId, id, jobPayload, now, now);
 
     // Fire WhatsApp to customer (non-blocking)
-    sendFranchiseLeadWhatsApp(customerPhone, customerName, id)
+    const expoDate = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
+    const salesName  = session.name  ?? 'UClean Team';
+    const salesPhone = session.phone ?? '';
+    sendFranchiseLeadWhatsApp(customerPhone, customerName, expoDate, salesName, salesPhone)
       .then(result => {
         const status    = result.success ? 'sent' : 'failed';
         const updateNow = new Date().toISOString();
@@ -95,7 +98,7 @@ export async function POST(req: NextRequest) {
 
     // Fire WhatsApp alert to sales person (non-blocking)
     if (session.phone) {
-      sendSalesLeadAlertWhatsApp(session.phone, customerName, id)
+      sendSalesLeadAlertWhatsApp(session.phone, salesName, customerName, customerPhone, city)
         .then(result => console.log(`[WA sales] lead=${id} success=${result.success}`))
         .catch(e => console.error('[WA sales] unexpected error:', e));
     }

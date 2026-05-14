@@ -90,34 +90,54 @@ export async function sendOrderConfirmWhatsApp(
 
 /**
  * Send franchise lead notification to the CUSTOMER.
- * Uses order_confirm as a placeholder template for now.
+ * Template: expo_lead
+ * {{1}} = customerName, {{2}} = date, {{3}} = salesPersonName, {{4}} = salesPersonName, {{5}} = salesPersonPhone
  */
+const BROCHURE_URL = process.env.BROCHURE_URL || '';
+
 export async function sendFranchiseLeadWhatsApp(
   mobile: string,
   customerName: string,
-  leadId: string,
+  date: string,
+  salesPersonName: string,
+  salesPersonPhone: string,
 ) {
   return send(
     mobile,
-    'order_confirm',                         // ← swap to franchise template later
-    { body_1: customerName, button_1: leadId.slice(0, 8) },
+    'expo_lead',
+    {
+      header_1: BROCHURE_URL,
+      body_1: customerName,
+      body_2: date,
+      body_3: salesPersonName,
+      body_4: salesPersonName,
+      body_5: salesPersonPhone,
+    },
     TRANS_KEY,
   );
 }
 
 /**
  * Notify the SALES PERSON that their lead was captured successfully.
- * Uses same order_confirm template for now.
+ * Template: lead_sales
+ * {{1}} = salesPersonName, {{2}} = customerName, {{3}} = customerPhone, {{4}} = city
  */
 export async function sendSalesLeadAlertWhatsApp(
   salesPhone: string,
+  salesPersonName: string,
   customerName: string,
-  leadId: string,
+  customerPhone: string,
+  city: string,
 ) {
   return send(
     salesPhone,
-    'order_confirm',
-    { body_1: customerName, button_1: leadId.slice(0, 8) },
+    'lead_sales',
+    {
+      body_1: salesPersonName,
+      body_2: customerName,
+      body_3: customerPhone,
+      body_4: city,
+    },
     TRANS_KEY,
   );
 }
