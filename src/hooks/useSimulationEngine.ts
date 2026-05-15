@@ -84,7 +84,7 @@ function buildSeed(): SimMetrics {
   return {
     ordersToday:     lerp(cfg.startOrders, cfg.endOrders, t),
     revenueToday:    lerp(cfg.startGSV,    cfg.endGSV,    t),
-    activeStores:    lerp(895, 910, t),
+    activeStores:    901,
     customersServed: 5_000_000,
     processingNow:   Math.max(1, Math.round(lerp(cfg.startOrders, cfg.endOrders, t) * 0.11)),
     countriesOnline: 10,
@@ -180,14 +180,12 @@ export function useSimulationEngine() {
         revenueRef.current += newOrders * (avgOrderGSV + Math.floor(Math.random() * 200 - 100));
 
         const processing = Math.max(1, Math.round(ordersRef.current * 0.11 + Math.random() * 20 - 10));
-        const stores     = lerp(895, 910, getDayProgress(cfg)) + Math.floor(Math.random() * 4 - 2);
-
         setMetrics(prev => ({
           ...prev,
           ordersToday:   ordersRef.current,
           revenueToday:  revenueRef.current,
           processingNow: processing,
-          activeStores:  stores,
+          activeStores:  901,
         }));
         setTick(n => n + 1);
         schedule();
