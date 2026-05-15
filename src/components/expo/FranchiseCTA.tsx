@@ -375,10 +375,10 @@ export default function FranchiseCTA() {
               </button>
             </div>
           )}
-          <h2 className="text-2xl sm:text-3xl font-black text-slate-800 leading-tight">
+          <h2 className="text-2xl sm:text-3xl font-black leading-tight" style={{ color: '#000000' }}>
             Capture <span className="text-green-600">Lead</span>
           </h2>
-          <p className="text-xs sm:text-sm text-slate-500 font-medium mt-1">Enter prospective partner details</p>
+          <p className="text-xs sm:text-sm font-medium mt-1" style={{ color: '#374151' }}>Enter prospective partner details</p>
         </div>
 
         <form 

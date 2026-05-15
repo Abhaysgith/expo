@@ -15,14 +15,23 @@ export interface ZixflowResult {
   response: unknown;
 }
 
+/** Normalize to international format — strips +, spaces, dashes; prepends 91 for 10-digit Indian numbers */
+function normalizePhone(mobile: string): string {
+  let num = mobile.replace(/[\s\-().+]/g, '');
+  if (num.length === 10) num = '91' + num;          // 10-digit → add India code
+  else if (num.startsWith('0')) num = '91' + num.slice(1); // 0XXXXXXXXXX → 91XXXXXXXXXX
+  return num;
+}
+
 async function send(
   mobile: string,
   templateName: string,
   variables: Record<string, string>,
   bearerToken: string,
 ): Promise<ZixflowResult> {
+  const to = normalizePhone(mobile);
   const payload = {
-    to: mobile,
+    to,
     phoneId: PHONE_ID,
     templateName,
     language: 'en',
@@ -31,7 +40,7 @@ async function send(
   };
 
   try {
-    console.log(`[Zixflow] → to=${mobile} template=${templateName}`);
+    console.log(`[Zixflow] → to=${to} (raw=${mobile}) template=${templateName}`);
 
     const res = await fetch(ZIXFLOW_API, {
       method: 'POST',
