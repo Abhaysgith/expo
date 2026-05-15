@@ -12,9 +12,10 @@ export async function GET() {
     `SELECT id, customer_name, customer_phone, customer_email, city, budget, note,
             preferred_location, status, whatsapp_status, created_at
      FROM leads
-     WHERE owner_user_id = ? AND deleted_at IS NULL
+     WHERE (owner_user_id = ? OR (owner_user_id IS NULL AND owner_name = ?))
+       AND deleted_at IS NULL
      ORDER BY created_at DESC`
-  ).all(session.userId);
+  ).all(session.userId, session.name);
 
   return ok({ leads });
 }
