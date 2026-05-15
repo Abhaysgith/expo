@@ -46,6 +46,13 @@ export async function POST(req: NextRequest) {
   const { customerName, customerPhone, customerEmail, city, note, budget, preferredLocation, brochureUrl } = parsed.data;
 
   const db = getDb();
+
+  // Verify the session user actually exists in this DB (volume may have been reset)
+  const sessionUserExists = isLoggedInSales
+    ? !!db.prepare('SELECT 1 FROM users WHERE id = ?').get(session.userId)
+    : false;
+  const isValidSales = isLoggedInSales && sessionUserExists;
+
   const id = uuidv4();
   const now = new Date().toISOString();
 
@@ -63,9 +70,9 @@ export async function POST(req: NextRequest) {
     note || null,
     budget || null,
     preferredLocation || null,
-    isLoggedInSales ? session.userId      : null,
-    isLoggedInSales ? session.name        : DEFAULT_OWNER.name,
-    isLoggedInSales ? session.phone       : DEFAULT_OWNER.phone,
+    isValidSales ? session.userId      : null,
+    isValidSales ? session.name        : DEFAULT_OWNER.name,
+    isValidSales ? session.phone       : DEFAULT_OWNER.phone,
     brochureUrl || null,
     now,
     now
@@ -73,8 +80,8 @@ export async function POST(req: NextRequest) {
 
   // Always send WhatsApp — use session if logged in, fallback to DEFAULT_OWNER
   const expoDate   = new Date().toLocaleDateString('en-IN', { day: 'numeric', month: 'long', year: 'numeric' });
-  const salesName  = isLoggedInSales ? (session.name  ?? DEFAULT_OWNER.name)  : DEFAULT_OWNER.name;
-  const salesPhone = isLoggedInSales ? (session.phone ?? DEFAULT_OWNER.phone) : DEFAULT_OWNER.phone;
+  const salesName  = isValidSales ? (session.name  ?? DEFAULT_OWNER.name)  : DEFAULT_OWNER.name;
+  const salesPhone = isValidSales ? (session.phone ?? DEFAULT_OWNER.phone) : DEFAULT_OWNER.phone;
 
   const jobId = uuidv4();
   db.prepare(
