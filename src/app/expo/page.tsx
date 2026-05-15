@@ -590,12 +590,14 @@ function SlideMap() {
 // ══════════════════════════════════════════════════════════
 function SlideEnterprise() {
   const SERVICES = [
-    { icon: '👔', name: 'Dry Cleaning',    desc: '48h turnaround' },
-    { icon: '🧺', name: 'Wash & Fold',     desc: '₹79/kg onwards' },
-    { icon: '♨️', name: 'Steam Press',    desc: 'Express 12h' },
-    { icon: '✨', name: 'Premium Laundry', desc: 'White glove care' },
-    { icon: '👟', name: 'Shoe Cleaning',   desc: 'Brand safe process' },
-    { icon: '🌿', name: 'Eco Wash',        desc: '0.5L water / kg' },
+    { icon: '👔', name: 'Dry Cleaning',        desc: '48h turnaround' },
+    { icon: '🧺', name: 'Wash & Fold',          desc: '₹109/kg onwards' },
+    { icon: '👕', name: 'Wash & Iron',          desc: 'Crisp & fresh' },
+    { icon: '♨️', name: 'Steam Press',         desc: 'Express 12h' },
+    { icon: '✨', name: 'Premium Laundry',      desc: 'White glove care' },
+    { icon: '👜', name: 'Bag Cleaning',         desc: 'All bag types' },
+    { icon: '👟', name: 'Shoe Cleaning',        desc: 'Brand safe process' },
+    { icon: '🛋️', name: 'Sofa Cleaning',       desc: 'Deep clean & dry' },
   ];
 
   return (
