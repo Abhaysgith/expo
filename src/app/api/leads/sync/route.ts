@@ -29,6 +29,11 @@ export async function POST(req: NextRequest) {
   }
 
   const db = getDb();
+
+  // Verify session user exists in this DB (protects against stale session after volume reset)
+  const userExists = !!db.prepare('SELECT 1 FROM users WHERE id = ?').get(session.userId);
+  if (!userExists) return err('Session expired. Please log in again.', 401);
+
   const upsert = db.prepare(
     `INSERT INTO leads
       (id, customer_name, customer_phone, customer_email, city, note, budget,
