@@ -764,14 +764,10 @@ export default function ExpoPage() {
       .catch(() => {});
   }, []);
 
-  // Auto-pause on franchise slide when sales person is logged in
+  // Auto-pause when sales person is logged in (franchise slide removed)
   useEffect(() => {
-    if (currentSlide === 'franchise' && isSalesLoggedIn) {
-      pause();
-    } else if (currentSlide !== 'franchise' && isSalesLoggedIn) {
-      resume();
-    }
-  }, [currentSlide, isSalesLoggedIn, pause, resume]);
+    if (isSalesLoggedIn) pause();
+  }, [isSalesLoggedIn, pause]);
 
   const isLightSlide = LIGHT_SLIDES.has(currentSlide);
 

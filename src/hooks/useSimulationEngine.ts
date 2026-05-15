@@ -39,16 +39,16 @@ interface DayConfig {
 }
 
 const DAILY_CONFIG: Record<string, DayConfig> = {
-  '2026-05-14': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '18:30' },
-  '2026-05-15': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '18:30' },
-  '2026-05-16': { startOrders: 440,   endOrders: 16_800,  startGSV: 215_600,  endGSV: 8_736_000, startTime: '09:30', endTime: '18:30' },
-  '2026-05-17': { startOrders: 515,   endOrders: 18_600,  startGSV: 260_075,  endGSV: 9_660_000, startTime: '09:30', endTime: '18:30' },
+  '2026-05-14': { startOrders: 100, endOrders: 12_000, startGSV: 53_000, endGSV: 63_60_000, startTime: '09:30', endTime: '18:30' },
+  '2026-05-15': { startOrders: 100, endOrders: 12_000, startGSV: 53_000, endGSV: 63_60_000, startTime: '09:30', endTime: '18:30' },
+  '2026-05-16': { startOrders: 100, endOrders: 12_000, startGSV: 53_000, endGSV: 63_60_000, startTime: '09:30', endTime: '18:30' },
+  '2026-05-17': { startOrders: 100, endOrders: 12_000, startGSV: 53_000, endGSV: 63_60_000, startTime: '09:30', endTime: '18:30' },
 };
 
 // Fallback if today has no config
 const DEFAULT_CONFIG: DayConfig = {
-  startOrders: 440, endOrders: 16_800, startGSV: 215_600, endGSV: 8_736_000,
-  startTime: '09:30', endTime: '21:30',
+  startOrders: 100, endOrders: 12_000, startGSV: 53_000, endGSV: 63_60_000,
+  startTime: '09:30', endTime: '18:30',
 };
 
 function getTodayKey(): string {
@@ -218,6 +218,26 @@ export function useSimulationEngine() {
   // ── Tick bump every 15s ───────────────────────────────────
   useEffect(() => {
     const t = setInterval(() => setTick(n => n + 1), 15000);
+    return () => clearInterval(t);
+  }, []);
+
+  // ── Auto-sync to correct time-based value every 60s ───────
+  // Prevents drift if the page is left open for a long time
+  useEffect(() => {
+    const t = setInterval(() => {
+      const cfg      = getTodayConfig();
+      const progress = getDayProgress(cfg);
+      const correct  = lerp(cfg.startOrders, cfg.endOrders, progress);
+      if (correct > ordersRef.current) {
+        ordersRef.current  = correct;
+        revenueRef.current = lerp(cfg.startGSV, cfg.endGSV, progress);
+        setMetrics(prev => ({
+          ...prev,
+          ordersToday:  ordersRef.current,
+          revenueToday: revenueRef.current,
+        }));
+      }
+    }, 60_000);
     return () => clearInterval(t);
   }, []);
 
