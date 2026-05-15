@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Mail, Lock, LogIn, Loader2, AlertCircle, Shield } from 'lucide-react';
 import Image from 'next/image';
+import PWAInstallBanner from '@/components/shared/PWAInstallBanner';
 
 export default function AdminLoginPage() {
   const router = useRouter();
@@ -41,6 +42,8 @@ export default function AdminLoginPage() {
   };
 
   return (
+    <>
+    <PWAInstallBanner />
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -128,5 +131,6 @@ export default function AdminLoginPage() {
         </p>
       </motion.div>
     </div>
+    </>
   );
 }

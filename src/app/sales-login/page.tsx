@@ -7,6 +7,7 @@ import {
   User, Phone, Mail, Lock, LogIn, UserPlus, Loader2, AlertCircle,
 } from 'lucide-react';
 import Image from 'next/image';
+import PWAInstallBanner from '@/components/shared/PWAInstallBanner';
 
 type Mode = 'login' | 'signup';
 
@@ -84,6 +85,8 @@ export default function SalesLoginPage() {
   const labelClass = "text-xs font-bold text-gray-500 uppercase tracking-widest flex items-center gap-2";
 
   return (
+    <>
+    <PWAInstallBanner />
     <div className="min-h-screen bg-gray-50 flex items-center justify-center p-4">
       <motion.div
         initial={{ opacity: 0, y: 24 }}
@@ -275,5 +278,6 @@ export default function SalesLoginPage() {
         </p>
       </motion.div>
     </div>
+    </>
   );
 }

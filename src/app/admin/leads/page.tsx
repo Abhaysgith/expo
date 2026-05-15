@@ -3,6 +3,7 @@ import { getSession } from '@/features/auth/session';
 import { getDb } from '@/lib/db';
 import AdminLeadList from '@/components/admin/AdminLeadList';
 import LogoutButton from '@/components/shared/LogoutButton';
+import PWAInstallBanner from '@/components/shared/PWAInstallBanner';
 import { Users, TrendingUp, Clock } from 'lucide-react';
 
 export const dynamic  = 'force-dynamic';
@@ -51,6 +52,8 @@ export default async function AdminLeadsPage() {
   ];
 
   return (
+    <>
+    <PWAInstallBanner />
     <div className="min-h-screen" style={{ background: '#F1F5F9' }}>
 
       {/* Header */}
@@ -112,5 +115,6 @@ export default async function AdminLeadsPage() {
         <AdminLeadList leads={leads} />
       </main>
     </div>
+    </>
   );
 }

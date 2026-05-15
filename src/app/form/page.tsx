@@ -3,10 +3,12 @@
 import Image from 'next/image';
 import FranchiseCTA from '@/components/expo/FranchiseCTA';
 import OfflineSyncProvider from '@/components/sales/OfflineSyncProvider';
+import PWAInstallBanner from '@/components/shared/PWAInstallBanner';
 
 export default function FormPage() {
   return (
     <OfflineSyncProvider>
+      <PWAInstallBanner />
       <div className="min-h-screen bg-gray-50">
 
         {/* Header */}
