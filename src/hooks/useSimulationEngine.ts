@@ -131,7 +131,7 @@ const CITIES = [
   'Vagamon', 'Vagator', 'Valsad', 'Varanasi', 'Vasai', 'Vellore', 'Vidisha',
   'Visakhapatnam', 'Yaarmag', 'Zirakpur', 'Ziro',
 ];
-const SERVICES = ['Dry Cleaning', 'Laundry - Wash & Fold', 'Laundry - Wash & Iron', 'Premium Laundry by KG', 'Steam Press', 'Bag Cleaning', 'Shoe Cleaning', 'Sofa Cleaning'];
+const SERVICES = ['Dry Cleaning', 'Laundry - Wash & Fold', 'Premium Laundry by KG', 'Steam Press', 'Bag Cleaning', 'Shoe Cleaning'];
 
 const EVENT_TEMPLATES: Array<{ type: string; color: string; gen: () => string }> = [
   { type: 'pickup',   color: '#22C55E', gen: () => `📦 Pickup scheduled · ${rnd(CITIES)}` },

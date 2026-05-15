@@ -592,12 +592,10 @@ function SlideEnterprise() {
   const SERVICES = [
     { icon: '👔', name: 'Dry Cleaning',              desc: '48h turnaround' },
     { icon: '🧺', name: 'Laundry - Wash & Fold',     desc: '₹109/kg onwards' },
-    { icon: '👕', name: 'Laundry - Wash & Iron',     desc: 'Crisp & fresh' },
     { icon: '✨', name: 'Premium Laundry by KG',     desc: 'White glove care' },
     { icon: '♨️', name: 'Steam Press',              desc: 'Express 12h' },
     { icon: '👜', name: 'Bag Cleaning',              desc: 'All bag types' },
     { icon: '👟', name: 'Shoe Cleaning',             desc: 'Brand safe process' },
-    { icon: '🛋️', name: 'Sofa Cleaning',            desc: 'Deep clean & dry' },
   ];
 
   return (
