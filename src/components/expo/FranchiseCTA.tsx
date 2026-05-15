@@ -387,7 +387,7 @@ export default function FranchiseCTA() {
         >
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
             <div className="space-y-1 sm:space-y-1.5">
-              <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+              <label className="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-2 px-1">
                 <User className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
                 Full Name
               </label>
@@ -396,20 +396,20 @@ export default function FranchiseCTA() {
                 required
                 value={formData.name}
                 onChange={(e) => setFormData({ ...formData, name: e.target.value })}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all"
+                className="w-full bg-white border border-slate-400 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-green-500 transition-all"
                 placeholder="John Doe"
               />
             </div>
             <div className="space-y-1 sm:space-y-1.5">
-              <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+              <label className="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-2 px-1">
                 <Mail className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
-                Email <span className="text-slate-300 normal-case font-normal">(optional)</span>
+                Email <span className="text-slate-500 normal-case font-normal">(optional)</span>
               </label>
               <input
                 type="email"
                 value={formData.email}
                 onChange={(e) => setFormData({ ...formData, email: e.target.value })}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all"
+                className="w-full bg-white border border-slate-400 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-green-500 transition-all"
                 placeholder="john@email.com"
               />
             </div>
@@ -417,7 +417,7 @@ export default function FranchiseCTA() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 sm:gap-4">
             <div className="space-y-1 sm:space-y-1.5">
-              <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+              <label className="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-2 px-1">
                 <Phone className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
                 WhatsApp
               </label>
@@ -426,12 +426,12 @@ export default function FranchiseCTA() {
                 required
                 value={formData.phone}
                 onChange={(e) => setFormData({ ...formData, phone: e.target.value })}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all"
+                className="w-full bg-white border border-slate-400 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-green-500 transition-all"
                 placeholder="+91 98765..."
               />
             </div>
             <div className="space-y-1 sm:space-y-1.5">
-              <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+              <label className="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-2 px-1">
                 <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
                 City
               </label>
@@ -440,36 +440,36 @@ export default function FranchiseCTA() {
                 required
                 value={formData.city}
                 onChange={(e) => setFormData({ ...formData, city: e.target.value })}
-                className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all"
+                className="w-full bg-white border border-slate-400 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-green-500 transition-all"
                 placeholder="e.g. Mumbai"
               />
             </div>
           </div>
 
           <div className="space-y-1 sm:space-y-1.5">
-            <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+            <label className="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-2 px-1">
               <MapPin className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
-              Preferred Location <span className="text-slate-300 normal-case font-normal">(optional)</span>
+              Preferred Location <span className="text-slate-500 normal-case font-normal">(optional)</span>
             </label>
             <input
               type="text"
               value={formData.preferredLocation}
               onChange={(e) => setFormData({ ...formData, preferredLocation: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all"
+              className="w-full bg-white border border-slate-400 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-green-500 transition-all"
               placeholder="e.g. Andheri West, Mumbai"
             />
           </div>
 
           <div className="space-y-1 sm:space-y-1.5">
-            <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+            <label className="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-2 px-1">
               <IndianRupee className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
-              Investment Budget <span className="text-slate-300 normal-case font-normal">(optional)</span>
+              Investment Budget <span className="text-slate-500 normal-case font-normal">(optional)</span>
             </label>
             <div className="relative">
               <button
                 type="button"
                 onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-                className={`w-full bg-slate-50 border ${isDropdownOpen ? 'border-green-500' : 'border-slate-200'} rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-left transition-all flex items-center justify-between outline-none ${!formData.investmentBudget ? 'text-slate-400' : 'text-slate-800'}`}
+                className={`w-full bg-white border ${isDropdownOpen ? 'border-green-500' : 'border-slate-400'} rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-left transition-all flex items-center justify-between outline-none ${!formData.investmentBudget ? 'text-slate-500' : 'text-slate-900'}`}
               >
                 {formData.investmentBudget ? BUDGET_OPTIONS.find(o => o.value === formData.investmentBudget)?.label : 'Select Range'}
                 <ChevronDown className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition-transform duration-300 ${isDropdownOpen ? 'rotate-180 text-green-500' : 'text-slate-400'}`} />
@@ -507,15 +507,15 @@ export default function FranchiseCTA() {
           </div>
 
           <div className="space-y-1 sm:space-y-1.5">
-            <label className="text-[10px] sm:text-xs font-bold text-slate-400 uppercase tracking-widest flex items-center gap-2 px-1">
+            <label className="text-[10px] sm:text-xs font-bold text-slate-700 uppercase tracking-widest flex items-center gap-2 px-1">
               <MessageSquare className="w-3 h-3 sm:w-3.5 sm:h-3.5 text-green-500" />
-              Note <span className="text-slate-300 normal-case font-normal">(optional)</span>
+              Note <span className="text-slate-500 normal-case font-normal">(optional)</span>
             </label>
             <textarea
               rows={1}
               value={formData.message}
               onChange={(e) => setFormData({ ...formData, message: e.target.value })}
-              className="w-full bg-slate-50 border border-slate-200 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-800 focus:outline-none focus:border-green-500 transition-all resize-none"
+              className="w-full bg-white border border-slate-400 rounded-xl sm:rounded-2xl px-3 py-2 sm:px-4 sm:py-3 text-sm sm:text-base text-slate-900 focus:outline-none focus:border-green-500 transition-all resize-none"
               placeholder="Any specific questions?"
             />
           </div>
