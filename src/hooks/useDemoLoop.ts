@@ -2,7 +2,7 @@
 
 import { useState, useEffect, useCallback, useRef } from 'react';
 
-export type DemoSlide = 'hero' | 'metrics' | 'process' | 'map' | 'enterprise' | 'franchise';
+export type DemoSlide = 'hero' | 'metrics' | 'process' | 'map' | 'enterprise';
 
 export const DEMO_SLIDES: DemoSlide[] = [
   'hero',
@@ -10,7 +10,6 @@ export const DEMO_SLIDES: DemoSlide[] = [
   'process',
   'map',
   'enterprise',
-  'franchise',
 ];
 
 const SLIDE_DURATION: Record<DemoSlide, number> = {
@@ -19,7 +18,6 @@ const SLIDE_DURATION: Record<DemoSlide, number> = {
   process:    4500,
   map:        5000,
   enterprise: 4000,
-  franchise:  6000,
 };
 
 interface DemoLoopState {

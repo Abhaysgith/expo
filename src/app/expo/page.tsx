@@ -73,7 +73,7 @@ function ExpoNav({
   onPrev: () => void; onNext: () => void; onToggle: () => void;
   onGoTo: (i: number) => void;
 }) {
-  const labels = ['HERO', 'METRICS', 'PROCESS', 'MAP', 'CLIENTS', 'FRANCHISE'];
+  const labels = ['HERO', 'METRICS', 'PROCESS', 'MAP', 'CLIENTS'];
   return (
     <motion.div
       className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 flex items-center gap-1.5 sm:gap-3 px-3 sm:px-5 py-2 sm:py-3 rounded-xl sm:rounded-2xl max-w-[95vw] overflow-x-auto scrollbar-hide"
@@ -139,7 +139,7 @@ const slideVariants = {
 };
 
 // ─── Light / dark slide map ────────────────────────────────
-const LIGHT_SLIDES = new Set(['hero', 'enterprise', 'franchise']);
+const LIGHT_SLIDES = new Set(['hero', 'enterprise']);
 
 // ─── Freshness bubbles (brand slides only) ─────────────────
 const FRESHNESS_BUBBLES = [
@@ -653,38 +653,6 @@ function SlideEnterprise() {
 }
 
 // ══════════════════════════════════════════════════════════
-// SLIDE 6 — FRANCHISE CTA
-// ══════════════════════════════════════════════════════════
-function SlideFranchise() {
-  return (
-    <div className="flex flex-col items-center justify-center h-full px-6"
-      style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 100%)' }}>
-      <div className="text-center mb-8">
-        <SLabel light>Become a Partner</SLabel>
-        <h2 className="font-black text-slate-800 leading-tight mb-3"
-          style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
-          Ready to Own a{' '}
-          <span style={{ background: 'linear-gradient(135deg, #15803D, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
-            UClean Franchise?
-          </span>
-        </h2>
-        <p className="text-slate-500 text-lg max-w-md mx-auto">
-          Tap the button below to capture a lead.
-        </p>
-      </div>
-
-      <a
-        href="/leads"
-        className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-black text-white text-xl shadow-xl transition-all hover:scale-105 active:scale-95"
-        style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)', boxShadow: '0 8px 32px rgba(22,163,74,0.35)' }}
-      >
-        Capture Lead →
-      </a>
-    </div>
-  );
-}
-
-// ══════════════════════════════════════════════════════════
 // MAIN EXPO PAGE
 // ══════════════════════════════════════════════════════════
 // ─── PWA Install Banner ────────────────────────────────────
@@ -813,7 +781,6 @@ export default function ExpoPage() {
     process:    <SlideProcess />,
     map:        <SlideMap />,
     enterprise: <SlideEnterprise />,
-    franchise:  <SlideFranchise />,
   };
 
   return (
