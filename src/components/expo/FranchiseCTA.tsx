@@ -227,15 +227,8 @@ export default function FranchiseCTA() {
     if (role === 'admin') {
       window.location.href = '/admin/leads';
     } else {
-      // Refresh sales user info without navigating
-      fetch('/api/auth/session')
-        .then(r => r.json())
-        .then(data => {
-          if (data?.data?.user?.role === 'sales') {
-            setSalesUser({ name: data.data.user.name, phone: data.data.user.phone });
-          }
-        })
-        .catch(() => {});
+      // Redirect to dedicated form page after sales login
+      window.location.href = '/form';
     }
   };
 
