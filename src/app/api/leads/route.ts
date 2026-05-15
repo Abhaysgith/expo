@@ -24,7 +24,7 @@ export async function GET() {
 }
 
 // Fallback owner when no sales person is logged in
-const DEFAULT_OWNER = { name: 'Abhay', phone: '9304236395' };
+const DEFAULT_OWNER = { name: 'Mr Gandhi', phone: '7303153515' };
 
 export async function POST(req: NextRequest) {
   // Auth is optional — if a sales person is logged in, attach them
