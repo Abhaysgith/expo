@@ -264,7 +264,7 @@ function SlideHero({ latestEvent }: { latestEvent: { text: string; color: string
           }}
         />
         <p className="impact-number text-5xl sm:text-7xl md:text-8xl">
-          3,000,000+
+          30,000,000+
         </p>
         <motion.p
           initial={{ opacity: 0 }}
