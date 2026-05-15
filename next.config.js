@@ -8,7 +8,8 @@ const withPWA = require('next-pwa')({
     document: '/offline.html', // served when a page is not cached and user is offline
   },
   additionalManifestEntries: [
-    { url: '/expo', revision: null },       // precache the expo page so it works offline immediately
+    { url: '/expo', revision: null },
+    { url: '/leads', revision: null },
     { url: '/offline.html', revision: null },
   ],
   runtimeCaching: [

@@ -14,7 +14,6 @@ import { useDemoLoop, DEMO_SLIDES }  from '@/hooks/useDemoLoop';
 import { useAttentionSpike }         from '@/hooks/useAttentionSpike';
 import GlobalMap                     from '@/components/expo/GlobalMap';
 import EnterpriseTrustBar            from '@/components/expo/EnterpriseTrustBar';
-import FranchiseCTA                  from '@/components/expo/FranchiseCTA';
 import AnimatedCounter               from '@/components/ui/AnimatedCounter';
 import EntryStrip                    from '@/components/expo/EntryStrip';
 import OfflineSyncProvider           from '@/components/sales/OfflineSyncProvider';
@@ -658,11 +657,29 @@ function SlideEnterprise() {
 // ══════════════════════════════════════════════════════════
 function SlideFranchise() {
   return (
-    <div className="flex flex-col h-full overflow-y-auto px-2 sm:px-4 pt-2 pb-6 sm:py-8 scrollbar-hide"
+    <div className="flex flex-col items-center justify-center h-full px-6"
       style={{ background: 'linear-gradient(135deg, #FFFFFF 0%, #F0FDF4 100%)' }}>
-      <div className="flex-1 flex flex-col items-center justify-start sm:justify-center min-h-max pb-16">
-        <FranchiseCTA />
+      <div className="text-center mb-8">
+        <SLabel light>Become a Partner</SLabel>
+        <h2 className="font-black text-slate-800 leading-tight mb-3"
+          style={{ fontSize: 'clamp(2.5rem, 5vw, 4rem)' }}>
+          Ready to Own a{' '}
+          <span style={{ background: 'linear-gradient(135deg, #15803D, #22C55E)', WebkitBackgroundClip: 'text', WebkitTextFillColor: 'transparent', backgroundClip: 'text' }}>
+            UClean Franchise?
+          </span>
+        </h2>
+        <p className="text-slate-500 text-lg max-w-md mx-auto">
+          Tap the button below to capture a lead.
+        </p>
       </div>
+
+      <a
+        href="/leads"
+        className="inline-flex items-center gap-3 px-10 py-5 rounded-2xl font-black text-white text-xl shadow-xl transition-all hover:scale-105 active:scale-95"
+        style={{ background: 'linear-gradient(135deg, #16A34A, #22C55E)', boxShadow: '0 8px 32px rgba(22,163,74,0.35)' }}
+      >
+        Capture Lead →
+      </a>
     </div>
   );
 }
